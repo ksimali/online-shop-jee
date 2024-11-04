@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS onlineshop;
+CREATE DATABASE IF NOT EXISTS onlineshop_bd;
 
-USE onlineshop;
+USE onlineshop_bd;
 
 CREATE TABLE IF NOT EXISTS client (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS administrateur (
 CREATE TABLE IF NOT EXISTS categorie (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(100) NOT NULL,
-    description TEXT,
+    description TEXT
 );
 
 CREATE TABLE IF NOT EXISTS produit (
