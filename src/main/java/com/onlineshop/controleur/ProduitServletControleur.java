@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ProductServletControleur
+ * Servlet implementation class ProduitServletControleur
  */
-@WebServlet("/ProductServletControleur")
-public class ProductServletControleur extends HttpServlet {
+@WebServlet("/ProduitServletControleur")
+public class ProduitServletControleur extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductServletControleur() {
+    public ProduitServletControleur() {
         super();
         // TODO Auto-generated constructor stub
     }
