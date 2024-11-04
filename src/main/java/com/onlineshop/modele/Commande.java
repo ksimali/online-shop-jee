@@ -1,6 +1,5 @@
 package com.onlineshop.modele;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -9,11 +8,11 @@ public class Commande {
     private int clientId; // Référence au client
     private Date dateCommande; // Date de la commande
     private List<Produit> produits; // Liste des produits commandés
-    private BigDecimal total; // Montant total de la commande
+    private double total; // Montant total de la commande
     private String statut; // Statut de la commande (en cours, expédiée, annulée)
 
     // Constructeur
-    public Commande(int id, int clientId, Date dateCommande, List<Produit> produits, BigDecimal total, String statut) {
+    public Commande(int id, int clientId, Date dateCommande, List<Produit> produits, double total, String statut) {
         this.id = id;
         this.clientId = clientId;
         this.dateCommande = dateCommande;
@@ -55,11 +54,11 @@ public class Commande {
         this.produits = produits;
     }
 
-    public BigDecimal getTotal() {
+    public double getTotal() {
         return total;
     }
 
-    public void setTotal(BigDecimal total) {
+    public void setTotal(double total) {
         this.total = total;
     }
 

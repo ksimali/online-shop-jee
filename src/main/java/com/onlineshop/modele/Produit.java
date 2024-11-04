@@ -1,63 +1,45 @@
 package com.onlineshop.modele;
 
-import java.math.BigDecimal;
+import java.security.Timestamp;
 
 public class Produit {
     private int id;
     private String nom;
     private String description;
-    private BigDecimal prix;
-    private int quantiteDisponible; // Quantité disponible en stock
+    private double prix;
+    private String image;
+    private int categorieId;
 
     // Constructeur
-    public Produit(int id, String nom, String description, BigDecimal prix, int quantiteDisponible) {
+    public Produit() {}
+    
+    public Produit(int id, String nom, String description, double prix, String image, int categorieId) {
         this.id = id;
         this.nom = nom;
         this.description = description;
         this.prix = prix;
-        this.quantiteDisponible = quantiteDisponible;
+        this.image = image;
+        this.categorieId = categorieId;
     }
+    
+ // Getters et setters
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    // Getters et setters
-    public int getId() {
-        return id;
-    }
+    public String getNom() { return nom; }
+    public void setNom(String nom) { this.nom = nom; }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 
-    public String getNom() {
-        return nom;
-    }
+    public double getPrix() { return prix; }
+    public void setPrix(double prix) { this.prix = prix; }
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
+    public String getImage() { return image; }
+    public void setImage(String image) { this.image = image; }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public BigDecimal getPrix() {
-        return prix;
-    }
-
-    public void setPrix(BigDecimal prix) {
-        this.prix = prix;
-    }
-
-    public int getQuantiteDisponible() {
-        return quantiteDisponible;
-    }
-
-    public void setQuantiteDisponible(int quantiteDisponible) {
-        this.quantiteDisponible = quantiteDisponible;
-    }
+    public int getCategorieId() { return categorieId; }
+    public void setCategorieId(int categorieId) { this.categorieId = categorieId; }
 
     @Override
     public String toString() {
@@ -66,7 +48,6 @@ public class Produit {
                 ", nom='" + nom + '\'' +
                 ", description='" + description + '\'' +
                 ", prix=" + prix +
-                ", quantiteDisponible=" + quantiteDisponible +
                 '}';
     }
 }
