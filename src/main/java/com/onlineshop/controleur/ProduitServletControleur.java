@@ -82,7 +82,7 @@ public class ProduitServletControleur extends HttpServlet {
 		
 		request.setAttribute("PRODUIT_LIST", produits);
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/liste-produits.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
 		dispatcher.forward(request, response);
 	}
 
