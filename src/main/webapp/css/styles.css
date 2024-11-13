@@ -1,0 +1,109 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #5B9BD5; /* Bleu */
+    color: #fff; /* Texte en blanc */
+    margin: 0;
+}
+
+header, aside {
+    font-family: Arial, sans-serif;
+    background-color: #5B9BD5; /* Bleu */
+    color: #fff; /* Texte en blanc */
+    padding: 15px;
+}
+
+/*
+.container {
+   padding: 20px;
+}
+*/
+
+.form-group label {
+    color: #fff;
+}
+
+.transparent-input {
+    background-color: rgba(255, 255, 255, 0.5); /* Transparence */
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.btn {
+    background-color: #5B9BD5; /* Transparence */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px 5px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn:hover, .btn-ajouter:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.list-group-item {
+    background-color: #5B9BD5; /* Bleu */
+}
+
+.btn-login {
+    display: flex;
+    justify-content: right;
+    width: 75%;
+}
+
+.btn-register {
+    display: flex;
+    justify-content: right;
+}
+
+#btn-login-ok {
+    margin-right: 10px;
+    background-color: #BF9000;
+}
+
+#btn-login-register, #btn-register-save, #btn-supprimer, #btn-modifier, #btn-panier-acheter, #btn-categorie-save, #btn-produit-save {
+    background-color: #BF9000;
+}
+
+.card {
+    background-color: #5B9BD5; /* Bleu */
+}
+
+.btn-ajouter {
+    background-color: #BF9000;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    align-self: center;
+}
+
+.footerBox {
+    display: flex;
+    justify-content: end;
+}
+
+tbody {
+    background-color: whitesmoke;
+}
+
+#tabCategorie tr {
+    height: 100px;
+}
+
+.btn-action-modif, .btn-action-sup {
+    background-color: #BF9000;
+    color: #fff;
+    border: none;
+    padding: 2px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    align-self: center;
+}
+
+.btn-action-sup {
+    background-color: red;
+}

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panier</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <!-- Inclure l'en-tête -->
+    <header class="p-3">
+        <div class="container">
+            <div class="d-flex justify-content-between">
+                <div class="logo">
+                    <h1>Logo</h1>
+                </div>
+                <nav>
+                    <ul class="nav">
+                        <li class="nav-item"><a class="nav-link text-white" href="#"><b>Accueil</b></a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="#"><b>Contacter Nous</b></a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="#"><b>FR</b></a></li>
+                    </ul>
+                </nav>
+                <div class="search-bar">
+                    <input type="text" class="form-control" placeholder="Recherche...">
+                </div>
+                <div class="d-flex">
+                    <a href="#" class="btn">Panier</a>
+                    <a href="#" class="btn">Se connecter</a>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </header>
+
+    <div class="container mt-5">
+        <div class="row">
+            <!-- Inclure le menu latéral -->
+            <div id="sidebar" class="col-md-3">
+                <aside class="p-3">
+                    <ul class="list-group">
+                        <li class="list-group-item">Catégorie 1</li>
+                        <li class="list-group-item">Catégorie 2</li>
+                        <li class="list-group-item">Catégorie 3</li>
+                        <li class="list-group-item">Catégorie 4</li>
+                        <li class="list-group-item">Catégorie 5</li>
+                        <li class="list-group-item">Catégorie 6</li>
+                        <li class="list-group-item">Catégorie 7</li>
+                    </ul>
+                </aside>
+            </div>
+
+            <div class="col-md-9">
+                <h1 class="text-center">Panier</h1>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="text-center align-middle">Produit</th>
+                            <th class="text-center align-middle">Prix</th>
+                            <th class="text-center align-middle">Quantité</th>
+                            <th class="text-center align-middle" colspan="2">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="align-middle">Nom du produit</td>
+                            <td class="align-middle">24.99$</td>
+                            <td class="align-middle">
+                                <input type="number" class="form-control" value="1">
+                            </td>
+                            <td class="align-middle">
+                                <button id="btn-modifier" class="btn">Modifier</button>
+                            </td>
+                            <td class="text-center align-middle">
+                                <button id="btn-supprimer" class="btn">Supprimer</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="text-right">
+                    <button class="btn" id="btn-panier-continuer">Continuer à magasiner</button>
+                    <button class="btn" id="btn-panier-acheter">Acheter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <hr>
+        <div class="footerBox">
+            <nav>
+                <ul class="nav">
+                    <li class="nav-item"><a class="nav-link text-white" href="#"><b>Accueil</b></a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="#"><b>Contacter Nous</b></a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="#"><b>FR</b></a></li>
+                </ul>
+            </nav>
+        </div>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
