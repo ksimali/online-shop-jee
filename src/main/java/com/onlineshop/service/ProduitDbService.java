@@ -6,6 +6,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 import com.onlineshop.modele.Produit;
@@ -13,6 +14,7 @@ import com.onlineshop.modele.Produit;
 public class ProduitDbService {
 	
 	// Attribut pour la datasource permettant d'obtenir des connexion à la bd
+	@Resource(name="jdbc/onlineshop_bd")
 	private DataSource datasource;
 	
 	// Constructeur qui initialise l'objet dataSource avec la dataSource(la bdd) fournie
@@ -21,7 +23,7 @@ public class ProduitDbService {
 	}
 	
 	// Methode pour recupérer tous les produits de la bdd
-	public List<Produit> getProduits() throws Exception {
+	public List<Produit> getAllProduits() throws Exception {
 		List<Produit> produits = new ArrayList<>();
 		
 		Connection connection = null;
