@@ -24,5 +24,15 @@ public class Categorie {
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
+    
+    // Methode toString
+    @Override
+    public String toString() {
+    	return "Categorie{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }
 
