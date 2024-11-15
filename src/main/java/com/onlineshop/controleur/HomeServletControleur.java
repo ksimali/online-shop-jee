@@ -21,7 +21,7 @@ import com.onlineshop.service.ProduitDbService;
 /**
  * Servlet implementation class HomeServletControleur
  */
-@WebServlet("/Home")
+@WebServlet("/")
 public class HomeServletControleur extends HttpServlet {
 	private static final long serialVersionUID = 1L;
    
