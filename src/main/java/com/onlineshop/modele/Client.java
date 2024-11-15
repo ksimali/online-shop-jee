@@ -2,95 +2,128 @@ package com.onlineshop.modele;
 
 import java.sql.Timestamp;
 
-public class Client {
-    private int id;
-    private String nom;
-    private String prenom;
-    private String email;
-    private String motDePasse; // Stockez le mot de passe sous forme hachée
-    private String adresse; // Adresse de livraison
-    private Timestamp dateInscription;
+public class Client extends Utilisateur {
+    private String adresseDomicile;
+    private String villeDomicile;
+    private String provinceDomicile;
+    private String paysDomicile;
+    private String codepostalDomicile;
+    
+    private String adresseLivraison;
+    private String villeLivraison;
+    private String provinceLivraison;
+    private String paysLivraison;
+    private String codepostalLivraison;
     
     // Constructeur par défaut
     public Client() {}
     
     // Constructeur avec paramètres
-    public Client(int id, String nom, String prenom, String email, String motDePasse, String adresse, Timestamp dateInscription) {
-        this.id = id;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.email = email;
-        this.motDePasse = motDePasse; // Il est conseillé de hacher le mot de passe lors de l'enregistrement
-        this.adresse = adresse;
-        this.dateInscription = dateInscription;
-    }
+    public Client(int id, String nom, String prenom, String email, String motDePasse, Timestamp dateInscription,
+			String adresseDomicile, String villeDomicile, String provinceDomicile, String paysDomicile,
+			String codepostalDomicile, String adresseLivraison, String villeLivraison, String provinceLivraison,
+			String paysLivraison, String codepostalLivraison) {
+		super(id, nom, prenom, email, motDePasse, dateInscription);
+		this.adresseDomicile = adresseDomicile;
+		this.villeDomicile = villeDomicile;
+		this.provinceDomicile = provinceDomicile;
+		this.paysDomicile = paysDomicile;
+		this.codepostalDomicile = codepostalDomicile;
+		this.adresseLivraison = adresseLivraison;
+		this.villeLivraison = villeLivraison;
+		this.provinceLivraison = provinceLivraison;
+		this.paysLivraison = paysLivraison;
+		this.codepostalLivraison = codepostalLivraison;
+	}
 
-    // Getters et setters
-    public int getId() {
-        return id;
-    }
+	public String getAdresseDomicile() {
+		return adresseDomicile;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public void setAdresseDomicile(String adresseDomicile) {
+		this.adresseDomicile = adresseDomicile;
+	}
 
-    public String getNom() {
-        return nom;
-    }
+	public String getVilleDomicile() {
+		return villeDomicile;
+	}
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
+	public void setVilleDomicile(String villeDomicile) {
+		this.villeDomicile = villeDomicile;
+	}
 
-    public String getPrenom() {
-        return prenom;
-    }
+	public String getProvinceDomicile() {
+		return provinceDomicile;
+	}
 
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
+	public void setProvinceDomicile(String provinceDomicile) {
+		this.provinceDomicile = provinceDomicile;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getPaysDomicile() {
+		return paysDomicile;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setPaysDomicile(String paysDomicile) {
+		this.paysDomicile = paysDomicile;
+	}
 
-    public String getMotDePasse() {
-        return motDePasse;
-    }
+	public String getCodepostalDomicile() {
+		return codepostalDomicile;
+	}
 
-    public void setMotDePasse(String motDePasse) {
-        this.motDePasse = motDePasse; // Pensez à hacher le mot de passe avant de le stocker
-    }
+	public void setCodepostalDomicile(String codepostalDomicile) {
+		this.codepostalDomicile = codepostalDomicile;
+	}
 
-    public String getAdresse() {
-        return adresse;
-    }
+	public String getAdresseLivraison() {
+		return adresseLivraison;
+	}
 
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
-    }
+	public void setAdresseLivraison(String adresseLivraison) {
+		this.adresseLivraison = adresseLivraison;
+	}
 
-    public Timestamp getDateInscription() {
-        return dateInscription;
-    }
+	public String getVilleLivraison() {
+		return villeLivraison;
+	}
 
-    public void setDateInscription(Timestamp dateInscription) {
-        this.dateInscription = dateInscription;
-    }
+	public void setVilleLivraison(String villeLivraison) {
+		this.villeLivraison = villeLivraison;
+	}
 
-    @Override
-    public String toString() {
-        return "Client{" +
-                "id=" + id +
-                ", nom='" + nom + '\'' +
-                ", prenom='" + prenom + '\'' +
-                ", email='" + email + '\'' +
-                ", adresse='" + adresse + '\'' +
-                ", dateInscription=" + dateInscription +
-                '}';
-    }
+	public String getProvinceLivraison() {
+		return provinceLivraison;
+	}
+
+	public void setProvinceLivraison(String provinceLivraison) {
+		this.provinceLivraison = provinceLivraison;
+	}
+
+	public String getPaysLivraison() {
+		return paysLivraison;
+	}
+
+	public void setPaysLivraison(String paysLivraison) {
+		this.paysLivraison = paysLivraison;
+	}
+
+	public String getCodepostalLivraison() {
+		return codepostalLivraison;
+	}
+
+	public void setCodepostalLivraison(String codepostalLivraison) {
+		this.codepostalLivraison = codepostalLivraison;
+	}
+
+	@Override
+	public String toString() {
+		return "Informations additionnelles: [adresseDomicile=" + adresseDomicile + ", villeDomicile=" + villeDomicile + ", provinceDomicile="
+				+ provinceDomicile + ", paysDomicile=" + paysDomicile + ", codepostalDomicile=" + codepostalDomicile
+				+ ", adresseLivraison=" + adresseLivraison + ", villeLivraison=" + villeLivraison
+				+ ", provinceLivraison=" + provinceLivraison + ", paysLivraison=" + paysLivraison
+				+ ", codepostalLivraison=" + codepostalLivraison + "]";
+	}
+	
+	
 }
