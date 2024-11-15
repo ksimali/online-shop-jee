@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ProduitServletControleur extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
-	@Resource(name="jdbc/onlineshop_db")
+	@Resource(name="jdbc/onlineshop_bd")
 	private DataSource datasource;
 	
 	private ProduitDbService ProduitDbService;
@@ -38,16 +38,7 @@ public class ProduitServletControleur extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
     
-    public void init() throws ServletException {
-    	super.init();
-    	
-    	try {
-    		ProduitDbService = new ProduitDbService(datasource);
-    		
-    	}catch(Exception ex) {
-    		throw new ServletException(ex);
-    	}
-    }
+   
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -79,7 +70,7 @@ public class ProduitServletControleur extends HttpServlet {
 	// Methode listeProduits()
 	private void listeProduits(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		List<Produit> produits = ProduitDbService.getProduits();
+		List<Produit> produits = ProduitDbService.getAllProduits();
 		
 		request.setAttribute("PRODUIT_LIST", produits);
 		

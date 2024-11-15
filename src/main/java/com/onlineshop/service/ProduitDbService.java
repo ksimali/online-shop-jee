@@ -6,6 +6,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 import com.onlineshop.modele.Produit;
@@ -13,15 +14,18 @@ import com.onlineshop.modele.Produit;
 public class ProduitDbService {
 	
 	// Attribut pour la datasource permettant d'obtenir des connexion à la bd
-	private DataSource datasource;
+	@Resource(name="jdbc/onlineshop_bd")
+	private DataSource dataSource;
 	
 	// Constructeur qui initialise l'objet dataSource avec la dataSource(la bdd) fournie
-	public ProduitDbService(DataSource laDataSource) {
-		datasource = laDataSource;
+	public ProduitDbService(DataSource dataSource) {
+		this.dataSource = dataSource;
 	}
+	// Suppression du constructeur qui acceptait un DataSource, car l'injection est gérée par le conteneur
+    // Pas besoin de constructeur explicite, l'injection de dépendance se charge de l'initialisation de dataSource
 	
 	// Methode pour recupérer tous les produits de la bdd
-	public List<Produit> getProduits() throws Exception {
+	public List<Produit> getAllProduits() throws Exception {
 		List<Produit> produits = new ArrayList<>();
 		
 		Connection connection = null;
@@ -30,10 +34,10 @@ public class ProduitDbService {
 		
 		try {
 			// Obtenir une connexion a la bdd
-			connection = datasource.getConnection();
+			connection = dataSource.getConnection();
 			
 			// Définir la requête SQL pour sélectionner tous les étudiants, triés par matricule
-            String sql = "SELECT * FROM etudiant ORDER BY nom";
+            String sql = "SELECT * FROM produit ORDER BY nom";
             
             // Créer une déclaration et exécuter la requête
             statement = connection.createStatement();
@@ -46,7 +50,7 @@ public class ProduitDbService {
                 String description = resultSet.getString("description");
                 double prix = resultSet.getDouble("prix");
                 String image = resultSet.getString("image");
-                int categorieId = resultSet.getInt("categorieId");
+                int categorieId = resultSet.getInt("categorie_id");
 
                 // Créer un objet Etudiant temporaire et l'ajouter à la liste
                 Produit produitTemp = new Produit(id, nom, description, prix, image, categorieId);

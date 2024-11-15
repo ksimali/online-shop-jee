@@ -1,7 +1,5 @@
 package com.onlineshop.modele;
 
-import java.security.Timestamp;
-
 public class Produit {
     private int id;
     private String nom;
