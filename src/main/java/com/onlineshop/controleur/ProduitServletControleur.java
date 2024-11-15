@@ -37,16 +37,7 @@ public class ProduitServletControleur extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
     
-    public void init() throws ServletException {
-    	super.init();
-    	
-    	try {
-    		ProduitDbService = new ProduitDbService(datasource);
-    		
-    	}catch(Exception ex) {
-    		throw new ServletException(ex);
-    	}
-    }
+   
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
