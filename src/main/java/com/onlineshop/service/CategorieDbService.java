@@ -17,18 +17,18 @@ public class CategorieDbService {
 	
 	// Attribut pour la datasource permettant d'obtenir des connexion à la bd
 	@Resource(name="jdbc/onlineshop_bd")
-	private DataSource datasource;
+	private DataSource dataSource;
 		
 	// Constructeur qui initialise l'objet dataSource avec la dataSource(la bdd) fournie
-	public CategorieDbService(DataSource laDataSource) {
-		datasource = laDataSource;
+	public CategorieDbService(DataSource dataSource) {
+		this.dataSource = dataSource;
 	}
 	
 	// CREATE - Ajouter une nouvelle catégorie dans la base de données
     public boolean ajouterCategorie(Categorie categorie) throws SQLException {
     	
         String sql = "INSERT INTO Categorie (nom, description) VALUES (?, ?)";
-        try (Connection connection = datasource.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
         	
             statement.setString(1, categorie.getNom());
@@ -41,8 +41,9 @@ public class CategorieDbService {
 	// READ - Récupérer toutes les catégories
     public List<Categorie> getAllCategories() throws SQLException {
         List<Categorie> categories = new ArrayList<>();
-        String sql = "SELECT * FROM Categorie ORDER BY nom";
-        try (Connection connection = datasource.getConnection();
+        //Definition de la requête sql
+        String sql = "SELECT * FROM categorie ORDER BY nom";
+        try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
         	
@@ -53,6 +54,7 @@ public class CategorieDbService {
                 String description = resultSet.getString("description");
                 categories.add(new Categorie(id, nom, description)); // Ajout de la catégorie à la liste des catégories
             }
+            
             return categories;
         }
     }
@@ -61,7 +63,7 @@ public class CategorieDbService {
     public boolean supprimerCategorie(int categorieId) throws SQLException {
     	
         String sql = "DELETE FROM Categorie WHERE id=?";
-        try (Connection connection = datasource.getConnection();
+        try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
         	
             statement.setInt(1, categorieId);
