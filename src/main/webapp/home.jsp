@@ -79,7 +79,7 @@
 					%>
 					            <div class="col-md-4">
 					                <div class="card mb-4 transparent-card">
-					                    <img src="https://www.pngkey.com/png/detail/233-2332677_image-500580-placeholder-transparent.png" class="card-img-top" alt="<%= produit.getNom() %>">
+					               		<img src="https://www.pngkey.com/png/detail/233-2332677_image-500580-placeholder-transparent.png" class="card-img-top" alt="Produit ...">
 					                    <div class="card-body">
 					                        <h5 class="card-title"><%= produit.getNom() %></h5>
 					                        <p class="card-text"><%= produit.getDescription() %></p>
