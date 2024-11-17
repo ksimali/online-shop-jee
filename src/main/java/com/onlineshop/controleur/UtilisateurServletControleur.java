@@ -33,13 +33,15 @@ public class UtilisateurServletControleur extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
-
+		System.out.println("Action received: " + action);  // Affiche la valeur de 'action' dans la console
+		
         if ("login".equals(action)) {
+        	// Redirection vers pages/login.jsp
             request.getRequestDispatcher("/pages/login.jsp").forward(request, response);
         } else if ("register".equals(action)) {
             request.getRequestDispatcher("/pages/register.jsp").forward(request, response);
         } else {
-            response.sendRedirect("index.jsp");  // Redirection vers la page d'accueil par défaut
+            response.sendRedirect("home.jsp");  // Redirection vers la page d'accueil par défaut
         }
 	}
 
@@ -67,7 +69,7 @@ public class UtilisateurServletControleur extends HttpServlet {
             if(type.equals("admin")) {
             	request.getRequestDispatcher("/pages/accueilAdmin.jsp").forward(request, response); // Page après une connexion réussie
             } else if (type.equals("client")) {
-            	request.getRequestDispatcher("/pages/produits.jsp").forward(request, response); // Page après une connexion réussie
+            	request.getRequestDispatcher("/home.jsp").forward(request, response); // Page après une connexion réussie
             } else {
                 request.getRequestDispatcher("/pages/login.jsp").forward(request, response);
             }
