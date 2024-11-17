@@ -17,7 +17,7 @@
                 </div>
                 <div class="d-flex">
                     <a href="#" class="btn">Panier</a>
-                    <a href="#" class="btn">Se connecter</a>
+                    <a href="${pageContext.request.contextPath}/auth?action=login" class="btn">Se connecter</a>
                 </div>
             </div>
             <hr>
