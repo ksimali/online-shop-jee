@@ -14,57 +14,11 @@
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-    <!-- Inclure l'en-tête -->
-    <header class="p-3">
-        <div class="container">
-            <div class="d-flex justify-content-between">
-                <div class="logo">
-                    <h1>onlineshop</h1>
-                </div>
-                <nav>
-                    <ul class="nav">
-                        <li class="nav-item"><a class="nav-link text-white" href="#"><b>Accueil</b></a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="#"><b>Contacter Nous</b></a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="#"><b>FR</b></a></li>
-                    </ul>
-                </nav>
-                <div class="search-bar">
-                    <input type="text" class="form-control" placeholder="Recherche...">
-                </div>
-                <div class="d-flex">
-                    <a href="#" class="btn">Panier</a>
-                    <a href="#" class="btn">Se connecter</a>
-                </div>
-            </div>
-            <hr>
-        </div>
-    </header>
+	<%@ include file="header.jsp" %>
 
     <div class="container mt-5">
         <div class="row">
-            <!-- Inclure le menu latéral -->
-            <div id="sidebar" class="col-md-3">
-                <aside class="p-3">
-                	<h5> Les catégories</h6>
-                    <ul class="list-group">
-                    	<!-- Utiliser un scriptlet pour boucler sur les catégories pas si simple cette affaire OMG :-(-->
-        				<% 
-        					List<Categorie> categories = (List<Categorie>) request.getAttribute("categories");
-	        				if (categories != null && !categories.isEmpty()) {
-	        	                for (Categorie categorie : categories) {
-        				%>
-                        			<li class="list-group-item"><%= categorie.getNom() %></li>
-                        <%
-	        	                }
-	        				} else {
-                        %>
-                        		 <li class="list-group-item">Aucune catégorie disponible.</li>
-                    	<%
-	        				}
-                    	%>
-                    </ul>
-                </aside>
-            </div>
+            <%@ include file="aside.jsp" %>
 
             <div class="col-md-9">
                 <div class="row">
@@ -105,18 +59,7 @@
         </div>
     </div>
 
-    <footer>
-        <hr>
-        <div class="footerBox">
-            <nav>
-                <ul class="nav">
-                    <li class="nav-item"><a class="nav-link text-white" href="#"><b>Accueil</b></a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="#"><b>Contacter Nous</b></a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="#"><b>FR</b></a></li>
-                </ul>
-            </nav>
-        </div>
-    </footer>
+    <%@ include file="footer.jsp" %>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
