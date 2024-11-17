@@ -21,7 +21,7 @@
             <div class="col-md-9">
 				<form action="${pageContext.request.contextPath}/auth" method="POST" style="margin-left: 100px;">
                 	<input type="hidden" name="action" value="register">
-                    <h5 class="text-white">Informations</h5>
+                    <h3 class="text-dark">Création - compte client:</h3>
                     <hr>
                     <div class="form-row">
                         <div class="form-group col-md-6">

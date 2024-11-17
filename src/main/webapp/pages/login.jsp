@@ -19,8 +19,9 @@
            <%@ include file="../aside.jsp" %>
 
             <div class="col-md-9">
-                <h2 class="text-white">Connexion</h2><br/>
+                
                 <form action="${pageContext.request.contextPath}/auth" method="POST" style="margin-left: 100px;">
+                	<h3 class="text-dark">Connexion</h3><br/>
                 	<input type="hidden" name="action" value="login">
                     <div class="form-group">
                         <label for="email">Courriel:</label>
