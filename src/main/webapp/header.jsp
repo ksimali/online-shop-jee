@@ -3,13 +3,13 @@
         <div class="container">
             <div class="d-flex justify-content-between">
                 <div class="logo">
-                    <h1>onlineshop</h1>
+                    <h1><a class="icon-link" href="${pageContext.request.contextPath}/">onlineshop</a></h1>
                 </div>
                 <nav>
                     <ul class="nav">
-                        <li class="nav-item"><a class="nav-link text-white" href="#"><b>Accueil</b></a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="#"><b>Contacter Nous</b></a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="#"><b>FR</b></a></li>
+                        <li class="nav-item"><a class="nav-link text-dark"  href="${pageContext.request.contextPath}/"><b>Accueil</b></a></li>
+                        <li class="nav-item"><a class="nav-link text-dark" href="#"><b>Contacter Nous</b></a></li>
+                        <li class="nav-item"><a class="nav-link text-dark" href="#"><b>FR</b></a></li>
                     </ul>
                 </nav>
                 <div class="search-bar">
