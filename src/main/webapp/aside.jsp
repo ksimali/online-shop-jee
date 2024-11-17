@@ -7,7 +7,7 @@
 <!-- Inclure le menu latéral -->
        <div id="sidebar" class="col-md-3">
        		<aside class="p-3">
-            	<h5> Les catégories</h6>
+            	<h5> Les catégories</h5>
                 <ul class="list-group">
                 	<!-- Utiliser un scriptlet pour boucler sur les catégories pas si simple cette affaire OMG :-(-->
     				<% 
