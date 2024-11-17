@@ -36,7 +36,10 @@
 				                            <h5 class="card-title"><%= produit.getNom() %></h5>
 				                            <p class="card-text"><%= produit.getDescription() %></p>
 				                            <p class="card-text"><%= produit.getPrix() %> $</p>
-				                            <a href="#" class="btn-ajouter">Ajouter</a>
+				                            <!-- Bouton aligné à droite -->
+								            <div class="d-flex justify-content-end">
+								                <a href="#" class="btn btn-primary">Ajouter</a>
+								            </div>
 				                        </div>
 				                    </div>
 				                </div>
