@@ -59,9 +59,23 @@ public class HomeServletControleur extends HttpServlet {
     @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	try {
-            // Récupérer les produits et les catégories via les services
-            List<Produit> produits = produitDbService.getAllProduits();
-            List<Categorie> categories = categorieDbService.getAllCategories();
+    		// Récupérer le mot-clé de la barre de recherche
+    		String keyword = request.getParameter("search");
+    		
+    		// Definir une list vide de produits et de categories
+    		List<Produit> produits;
+    		List<Categorie> categories;
+    		
+    		if (keyword != null && !keyword.isEmpty()) {
+                // Si un mot-clé est entré, filtrer les produits en fonction de ce mot-clé
+                produits = produitDbService.searchProduitsByKeyword(keyword);
+            } else {
+                // Si la barre de recherche est vide, afficher tous les produits
+                produits = produitDbService.getAllProduits();
+            }
+    		
+            // Récupérer les catégories via les services
+            categories = categorieDbService.getAllCategories();
             
             System.out.println("Produits: " + produits);
             System.out.println("Catégories: " + categories);

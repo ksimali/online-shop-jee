@@ -21,42 +21,36 @@
         <div class="row">
             <%@ include file="aside.jsp" %>
 
-            <div class="col-md-9">
-                <div class="row">
-                    <% 
-					    // Récupérer la liste des produits depuis l'attribut de la requête
-					    List<Produit> produits = (List<Produit>) request.getAttribute("produits");
-					
-					    // Vérifier si la liste des produits n'est pas vide ou nulle
-					    if (produits != null && !produits.isEmpty()) {
-					        // Boucler à travers chaque produit pour afficher ses informations
-					        for (Produit produit : produits) {
-					%>
-					            <div class="col-md-4">
-					                <div class="card mb-4 transparent-card">
-					               		<img src="https://www.pngkey.com/png/detail/233-2332677_image-500580-placeholder-transparent.png" class="card-img-top" alt="Produit ...">
-					                    <div class="card-body">
-					                        <h5 class="card-title"><%= produit.getNom() %></h5>
-					                        <p class="card-text"><%= produit.getDescription() %></p>
-					                        <p class="card-text"><%= produit.getPrix() %> $</p>
-					                        <a href="#" class="btn-ajouter">Ajouter</a>
-					                    </div>
-					                </div>
-					            </div>
-					<%  
-					        }
-					    } else {
-					%>
-					        <p>Aucun produit disponible.</p>
-					<%
-					    }
-					%>
-                    
-                    
-                    
-                    
-                </div>
-            </div>
+			<div class="col-md-9">
+				<div class="row">
+				    <% 
+				        List<Produit> produits = (List<Produit>) request.getAttribute("produits");
+				    
+				        if (produits != null && !produits.isEmpty()) {
+				            for (Produit produit : produits) {
+				    %>
+				                <div class="col-md-4">
+				                    <div class="card mb-4 transparent-card">
+				                        <img src="https://www.pngkey.com/png/detail/233-2332677_image-500580-placeholder-transparent.png" class="card-img-top" alt="Produit ...">
+				                        <div class="card-body">
+				                            <h5 class="card-title"><%= produit.getNom() %></h5>
+				                            <p class="card-text"><%= produit.getDescription() %></p>
+				                            <p class="card-text"><%= produit.getPrix() %> $</p>
+				                            <a href="#" class="btn-ajouter">Ajouter</a>
+				                        </div>
+				                    </div>
+				                </div>
+				    <%  
+				            }
+				        } else {
+				    %>
+				            <p>Aucun produit disponible.</p>
+				    <%
+				        }
+				    %>
+				</div>
+			</div>
+           
         </div>
     </div>
 

@@ -1,7 +1,9 @@
 package com.onlineshop.service;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,38 @@ public class ProduitDbService {
 	}
 	// Suppression du constructeur qui acceptait un DataSource, car l'injection est gérée par le conteneur
     // Pas besoin de constructeur explicite, l'injection de dépendance se charge de l'initialisation de dataSource
+	
+	// Méthode de recherche des produis par mot clé
+	public List<Produit> searchProduitsByKeyword(String keyword) throws SQLException {
+		List<Produit> produits = new ArrayList<>();
+		String sql = "SELECT * FROM  `produit` WHERE nom LIKE ? OR description LIKE ?";
+		
+		// Connexion à la base de données et exection de la requête
+		try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            String searchTerm = "%" + keyword + "%"; // Utilisation des jokers pour la recherche partielle
+            stmt.setString(1, searchTerm);
+            stmt.setString(2, searchTerm);
+
+            // Exécution de la requête et récupération des résultats
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Produit produit = new Produit(
+                        rs.getInt("id"),
+                        rs.getString("nom"),
+                        rs.getString("description"),
+                        rs.getDouble("prix"),
+                        rs.getString("image"),
+                        rs.getInt("categorie_id")
+                    );
+                    produits.add(produit);
+                }
+            }
+        }
+		
+		return produits;
+	}
 	
 	// Methode pour recupérer tous les produits de la bdd
 	public List<Produit> getAllProduits() throws Exception {

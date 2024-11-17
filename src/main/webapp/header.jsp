@@ -13,8 +13,10 @@
                     </ul>
                 </nav>
                 <div class="search-bar">
-                    <input type="text" class="form-control" placeholder="Recherche...">
-                </div>
+				    <form method="get" action="<%= request.getContextPath() %>/">
+				        <input type="text" class="form-control" placeholder="Recherche..." name="search" value="${param.search}">
+				    </form>
+				</div>
                 <div class="d-flex">
                     <a href="#" class="btn">Panier</a>
                     <a href="${pageContext.request.contextPath}/auth?action=login" class="btn">Se connecter</a>
