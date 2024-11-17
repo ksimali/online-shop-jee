@@ -53,7 +53,16 @@ public class ProduitDbService {
                     produits.add(produit);
                 }
             }
+        }catch(SQLException ex) {
+        	// Loguer l'exception et la relancer pour être capturée dans le contrôleur
+            ex.printStackTrace();
+            throw new SQLException("Erreur lors de la recherche des produits", ex);
         }
+		
+		// Vérifier si la liste est vide et retourner un message
+	    if (produits.isEmpty()) {
+	        throw new SQLException("Aucun résultat de recherche n'a été trouvé.");
+	    }
 		
 		return produits;
 	}
