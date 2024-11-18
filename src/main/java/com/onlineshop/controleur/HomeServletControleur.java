@@ -2,6 +2,7 @@ package com.onlineshop.controleur;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -64,9 +65,9 @@ public class HomeServletControleur extends HttpServlet {
     		String categoryIdStr = request.getParameter("categorieId");
             int categorieId = (categoryIdStr != null && !categoryIdStr.isEmpty()) ? Integer.parseInt(categoryIdStr) : -1;
     		
-    		// Definir une list vide de produits et de categories
-    		List<Produit> produits;
-    		List<Categorie> categories;
+    		// Definir list produits et de categories vide par défauts
+    		List<Produit> produits = new ArrayList<>();
+    		List<Categorie> categories = new ArrayList<>();
     		
     		if (keyword != null && !keyword.isEmpty()) {
                 // Si un mot-clé est entré, filtrer les produits en fonction de ce mot-clé
@@ -89,6 +90,11 @@ public class HomeServletControleur extends HttpServlet {
             // Ajouter les produits et les catégories dans l'objet requête
             request.setAttribute("produits", produits);
             request.setAttribute("categories", categories);
+            
+            // Vérifier si la liste est vide et définir un attribut de message
+            if (produits.isEmpty()) {
+                request.setAttribute("message", "Aucun produit trouvé pour cette recherche.");
+            }
             
             // Rediriger vers la page d'accueil (home.jsp)
             RequestDispatcher dispatcher = request.getRequestDispatcher("/home.jsp");
