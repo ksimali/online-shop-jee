@@ -32,6 +32,17 @@ CREATE TABLE IF NOT EXISTS administrateur (
     date_inscription TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE utilisateur (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(50) NOT NULL,
+    prenom VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    mot_de_passe VARCHAR(255) NOT NULL,  -- Stocké sous forme hachée
+    date_inscription TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    role ENUM('client', 'administrateur') NOT NULL DEFAULT 'client'
+);
+
+
 CREATE TABLE IF NOT EXISTS categorie (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(100) NOT NULL,
@@ -48,14 +59,25 @@ CREATE TABLE IF NOT EXISTS produit (
     FOREIGN KEY (categorie_id) REFERENCES categorie(id)
 );
 
-CREATE TABLE IF NOT EXISTS panier (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    client_id INT,
-    produit_id INT,
-    quantite INT,
-    FOREIGN KEY (client_id) REFERENCES client(id),
-    FOREIGN KEY (produit_id) REFERENCES produit(id)
+-- SQL pour créer la table Panier
+CREATE TABLE Panier (
+    id INT AUTO_INCREMENT PRIMARY KEY,       -- Identifiant unique du panier
+    utilisateur_id INT NULL,                 -- Identifiant de l'utilisateur (NULL si non connecté)
+    total DECIMAL(10, 2) DEFAULT 0.00,        -- Montant total du panier
+    FOREIGN KEY (utilisateur_id) REFERENCES utilisateur(id) ON DELETE SET NULL
 );
+
+-- SQL pour créer la table ProduitPanier
+CREATE TABLE ProduitPanier (
+    id INT AUTO_INCREMENT PRIMARY KEY,            -- Identifiant unique pour chaque produit dans le panier
+    panier_id INT,                                -- Lien vers le panier auquel appartient ce produit
+    produit_id INT,                               -- Lien vers le produit dans le panier
+    quantite INT NOT NULL CHECK (quantite > 0),   -- Quantité du produit (doit être positive)
+    sous_total DECIMAL(10, 2) NOT NULL,           -- Sous-total pour cette quantité du produit
+    FOREIGN KEY (panier_id) REFERENCES Panier(id) ON DELETE CASCADE,
+    FOREIGN KEY (produit_id) REFERENCES Produit(id)
+);
+
 
 CREATE TABLE IF NOT EXISTS commande (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -112,6 +134,7 @@ INSERT INTO produit (nom, description, prix, image, categorie_id) VALUES
 ('Smartphone XYZ', 'Un smartphone moderne avec des fonctionnalités avancées.', 799.99, 'smartphone.jpg', 1),
 ('T-shirt Coton', 'Un t-shirt en coton bio pour un confort optimal.', 19.99, 'tshirt.jpg', 2),
 ('Lampe de Bureau', 'Une lampe de bureau design et économique.', 49.99, 'lampe.jpg', 3),
+('Lampe design Ikea', 'Une maginifique lampé épurée et  design de chez Ikea, a un prix imbattable.', 29.99, 'lampe.jpg', 3),
 ('Raquette de Tennis', 'Raquette de tennis de qualité professionnelle.', 120.00, 'raquette.jpg', 4),
 ('Roman Policier', 'Un roman captivant plein de suspense.', 12.50, 'roman.jpg', 5);
 
