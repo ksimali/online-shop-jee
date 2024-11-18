@@ -132,6 +132,33 @@ public class ProduitDbService {
         return produits;
     }
 	
+ // Méthode pour récupérer un produit par son ID
+    public Produit getProduitById(int produitId) throws SQLException {
+        Produit produit = null;
+        // Connexion à la base de données et requête pour récupérer le produit
+        String sql = "SELECT * FROM produit WHERE id = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, produitId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                // Créer un objet Produit à partir des résultats
+                produit = new Produit();
+                produit.setId(rs.getInt("id"));
+                produit.setNom(rs.getString("nom"));
+                produit.setDescription(rs.getString("description"));
+                produit.setPrix(rs.getDouble("prix"));
+                produit.setImage(rs.getString("image"));
+                produit.setCategorieId(rs.getInt("categorie_id"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            // Propagation de l'exception
+            throw new SQLException("Erreur lors de l'accès à la base de données pour récupérer le produit", ex);
+        }
+        return produit;
+    }
+    
 	private void close(Connection connection, Statement statement, ResultSet resultSet) {
 
 		try {
@@ -147,8 +174,8 @@ public class ProduitDbService {
 				connection.close();
 			}
 		}
-		catch (Exception exc) {
-			exc.printStackTrace();
+		catch (Exception ex) {
+			ex.printStackTrace();
 		}
 	}
 
