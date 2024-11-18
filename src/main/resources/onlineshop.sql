@@ -60,15 +60,15 @@ CREATE TABLE IF NOT EXISTS produit (
 );
 
 -- SQL pour créer la table Panier
-CREATE TABLE Panier (
+CREATE TABLE panier (
     id INT AUTO_INCREMENT PRIMARY KEY,       -- Identifiant unique du panier
     utilisateur_id INT NULL,                 -- Identifiant de l'utilisateur (NULL si non connecté)
     total DECIMAL(10, 2) DEFAULT 0.00,        -- Montant total du panier
     FOREIGN KEY (utilisateur_id) REFERENCES utilisateur(id) ON DELETE SET NULL
 );
 
--- SQL pour créer la table ProduitPanier
-CREATE TABLE ProduitPanier (
+-- SQL pour créer la table produit_panier
+CREATE TABLE produit_panier (
     id INT AUTO_INCREMENT PRIMARY KEY,            -- Identifiant unique pour chaque produit dans le panier
     panier_id INT,                                -- Lien vers le panier auquel appartient ce produit
     produit_id INT,                               -- Lien vers le produit dans le panier
