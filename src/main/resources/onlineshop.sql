@@ -73,7 +73,6 @@ CREATE TABLE produit_panier (
     panier_id INT,                                -- Lien vers le panier auquel appartient ce produit
     produit_id INT,                               -- Lien vers le produit dans le panier
     quantite INT NOT NULL CHECK (quantite > 0),   -- Quantité du produit (doit être positive)
-    sous_total DECIMAL(10, 2) NOT NULL,           -- Sous-total pour cette quantité du produit
     FOREIGN KEY (panier_id) REFERENCES Panier(id) ON DELETE CASCADE,
     FOREIGN KEY (produit_id) REFERENCES Produit(id)
 );
