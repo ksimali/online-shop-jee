@@ -109,6 +109,33 @@ public class ProduitDbService {
 		}
 	}
 	
+	// Méthode pour récupérer les produits par catégorie
+    public List<Produit> getProduitsByCategorie(int categorieId) throws SQLException {
+        List<Produit> produits = new ArrayList<>();
+        String sql = "SELECT * FROM produit WHERE categorie_id = ?";
+        
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setInt(1, categorieId);
+            
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Produit produit = new Produit(
+                        rs.getInt("id"),
+                        rs.getString("nom"),
+                        rs.getString("description"),
+                        rs.getDouble("prix"),
+                        rs.getString("image"),
+                        rs.getInt("categorie_id")
+                    );
+                    produits.add(produit);
+                }
+            }
+        }
+        return produits;
+    }
+	
 	private void close(Connection connection, Statement statement, ResultSet resultSet) {
 
 		try {

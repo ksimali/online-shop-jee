@@ -8,17 +8,17 @@
        <div id="sidebar" class="col-md-3">
        		<aside class="p-3">
             	<h5> Les catégories</h5>
-                <ul class="list-group">
+                <ul class="list-group list-unstyled">
                 	<!-- Utiliser un scriptlet pour boucler sur les catégories pas si simple cette affaire OMG :-(-->
     				<% 
     					List<Categorie> categories = (List<Categorie>) request.getAttribute("categories");
-     				if (categories != null && !categories.isEmpty()) {
-     	                for (Categorie categorie : categories) {
+     					if (categories != null && !categories.isEmpty()) {
+     	                	for (Categorie categorie : categories) {
     				%>
-                    			<li class="list-group-item"><%= categorie.getNom() %></li>
+                   				<li><a class="list-group-item" href="?categorieId=<%= categorie.getId() %>"><%= categorie.getNom() %></a></li>
                     <%
-     	                }
-     				} else {
+     	                	}
+     					} else {
                     %>
                     		 <li class="list-group-item">Aucune catégorie disponible.</li>
                 	<%
