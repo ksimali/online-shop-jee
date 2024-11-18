@@ -59,11 +59,7 @@ public class ProduitDbService {
             throw new SQLException("Erreur lors de la recherche des produits", ex);
         }
 		
-		// Vérifier si la liste est vide et retourner un message
-	    if (produits.isEmpty()) {
-	        throw new SQLException("Aucun résultat de recherche n'a été trouvé.");
-	    }
-		
+	    // Retourner la liste des produits (vide si aucun produit n'est trouvé)
 		return produits;
 	}
 	
