@@ -38,7 +38,12 @@
 				                            <p class="card-text"><%= produit.getPrix() %> $</p>
 				                            <!-- Bouton aligné à droite -->
 								            <div class="d-flex justify-content-end">
-								                <a href="#" class="btn btn-primary">Ajouter</a>
+								               <form action="${pageContext.request.contextPath}/panier" method="post">
+												    <input type="hidden" name="produitId" value="<%= produit.getId() %>">
+												    <input type="hidden" name="action" value="ajouter">
+												    <button type="submit" class="btn btn-primary">Ajouter</button>
+												</form>
+								               
 								            </div>
 				                        </div>
 				                    </div>
