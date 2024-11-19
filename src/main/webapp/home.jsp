@@ -3,6 +3,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.onlineshop.modele.Categorie" %>
 <%@ page import="com.onlineshop.modele.Produit" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="fr">
