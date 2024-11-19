@@ -2,6 +2,7 @@ package com.onlineshop.controleur;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -59,9 +60,29 @@ public class HomeServletControleur extends HttpServlet {
     @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	try {
-            // Récupérer les produits et les catégories via les services
-            List<Produit> produits = produitDbService.getAllProduits();
-            List<Categorie> categories = categorieDbService.getAllCategories();
+    		// Récupérer le mot-clé de la barre de recherche et de la categorie
+    		String keyword = request.getParameter("search");
+    		String categoryIdStr = request.getParameter("categorieId");
+            int categorieId = (categoryIdStr != null && !categoryIdStr.isEmpty()) ? Integer.parseInt(categoryIdStr) : -1;
+    		
+    		// Definir list produits et de categories vide par défauts
+    		List<Produit> produits = new ArrayList<>();
+    		List<Categorie> categories = new ArrayList<>();
+    		
+    		if (keyword != null && !keyword.isEmpty()) {
+                // Si un mot-clé est entré, filtrer les produits en fonction de ce mot-clé
+                produits = produitDbService.searchProduitsByKeyword(keyword);
+            } else {
+            	// Si aucun keyword n'est fourni, alors afficher tous les produits
+                if(categorieId != -1) { // Si une catégorie est sélectionnée, récupérer les produits de cette catégorie
+                	produits = produitDbService.getProduitsByCategorie(categorieId);
+                }else {
+                	produits = produitDbService.getAllProduits();
+                }       
+            }
+    		
+            // Récupérer les catégories via les services
+            categories = categorieDbService.getAllCategories();
             
             System.out.println("Produits: " + produits);
             System.out.println("Catégories: " + categories);
@@ -69,6 +90,11 @@ public class HomeServletControleur extends HttpServlet {
             // Ajouter les produits et les catégories dans l'objet requête
             request.setAttribute("produits", produits);
             request.setAttribute("categories", categories);
+            
+            // Vérifier si la liste est vide et définir un attribut de message
+            if (produits.isEmpty()) {
+                request.setAttribute("message", "Aucun produit trouvé pour cette recherche.");
+            }
             
             // Rediriger vers la page d'accueil (home.jsp)
             RequestDispatcher dispatcher = request.getRequestDispatcher("/home.jsp");

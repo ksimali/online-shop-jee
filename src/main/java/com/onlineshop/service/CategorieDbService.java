@@ -24,6 +24,22 @@ public class CategorieDbService {
 		this.dataSource = dataSource;
 	}
 	
+	// Méthode pour récupérer une catégorie par son ID
+    public String getCategorieNomById(int categorieId) throws SQLException {
+        String sql = "SELECT nom FROM categorie WHERE id = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, categorieId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("nom"); // Retourne le nom de la catégorie
+                }
+            }
+        }
+        
+        return null; // Retourne null si la catégorie n'est pas trouvée
+    }
+    
 	// CREATE - Ajouter une nouvelle catégorie dans la base de données
     public boolean ajouterCategorie(Categorie categorie) throws SQLException {
     	
