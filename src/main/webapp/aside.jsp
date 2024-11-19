@@ -9,21 +9,19 @@
        		<aside class="p-3">
             	<h5> Les catégories</h5>
                 <ul class="list-group list-unstyled">
-                	<!-- Utiliser un scriptlet pour boucler sur les catégories pas si simple cette affaire OMG :-(-->
-    				<% 
-    					List<Categorie> categories = (List<Categorie>) request.getAttribute("categories");
-     					if (categories != null && !categories.isEmpty()) {
-     	                	for (Categorie categorie : categories) {
-    				%>
-                   				<li><a class="list-group-item" href="?categorieId=<%= categorie.getId() %>"><%= categorie.getNom() %></a></li>
-                    <%
-     	                	}
-     					} else {
-                    %>
-                    		 <li class="list-group-item">Aucune catégorie disponible.</li>
-                	<%
-     				}
-                	%>
+                	<!-- Utiliser un code JSTL plutot pour boucler sur les catégories, heureusement car pas si simple cette affaire de scriplet OMG :-(-->
+    				<!-- Vérifier d'abord si la liste des catégories existe et n'est pas vide -->
+					<c:if test="${not empty categories}">
+					    <!-- Boucler sur la liste des catégories -->
+					    <c:forEach var="categorie" items="${categories}">
+					        <li><a class="list-group-item" href="?categorieId=${categorie.id}">${categorie.nom}</a></li>
+					    </c:forEach>
+					</c:if>
+					
+					<!-- Message à afficher si aucune catégorie n'est disponible -->
+					<c:if test="${empty categories}">
+					    <li class="list-group-item">Aucune catégorie disponible.</li>
+					</c:if>
                 </ul>
             </aside>
         </div>
