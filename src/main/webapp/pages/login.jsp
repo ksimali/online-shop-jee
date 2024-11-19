@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -11,52 +12,16 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 </head>
 <body>
-    <!-- Inclure l'en-tête -->
-    <header class="p-3">
-        <div class="container">
-            <div class="d-flex justify-content-between">
-                <div class="logo">
-                    <h1>Logo</h1>
-                </div>
-                <nav>
-                    <ul class="nav">
-                        <li class="nav-item"><a class="nav-link text-white" href="#"><b>Accueil</b></a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="#"><b>Contacter Nous</b></a></li>
-                        <li class="nav-item"><a class="nav-link text-white" href="#"><b>FR</b></a></li>
-                    </ul>
-                </nav>
-                <div class="search-bar">
-                    <input type="text" class="form-control" placeholder="Recherche...">
-                </div>
-                <div class="d-flex">
-                    <a href="#" class="btn">Panier</a>
-                    <a href="#" class="btn">Se connecter</a>
-                </div>
-            </div>
-            <hr>
-        </div>
-    </header>
+    <%@ include file="../header.jsp" %>
 
     <div class="container mt-5">
         <div class="row">
-            <!-- Inclure le menu latéral -->
-            <div id="sidebar" class="col-md-3">
-                <aside class="p-3">
-                    <ul class="list-group">
-                        <li class="list-group-item">Catégorie 1</li>
-                        <li class="list-group-item">Catégorie 2</li>
-                        <li class="list-group-item">Catégorie 3</li>
-                        <li class="list-group-item">Catégorie 4</li>
-                        <li class="list-group-item">Catégorie 5</li>
-                        <li class="list-group-item">Catégorie 6</li>
-                        <li class="list-group-item">Catégorie 7</li>
-                    </ul>
-                </aside>
-            </div>
+           <%@ include file="../aside.jsp" %>
 
             <div class="col-md-9">
-                <h2 class="text-white">Connexion</h2><br/>
+                
                 <form action="${pageContext.request.contextPath}/auth" method="POST" style="margin-left: 100px;">
+                	<h3 class="text-dark">Connexion</h3><br/>
                 	<input type="hidden" name="action" value="login">
                     <div class="form-group">
                         <label for="email">Courriel:</label>
@@ -76,7 +41,10 @@
                     </div>
                     <div class="btn-login">
                         <button type="submit" id="btn-login-ok" class="btn btn-primary">OK</button>
-                        <button type="button" id="btn-login-register" class="btn btn-secondary" onclick="window.location.href='register.jsp'">Créer un compte</button>  
+                        <button type="button" id="btn-login-register" class="btn btn-secondary" 
+                        	onclick="window.location.href='${pageContext.request.contextPath}/auth?action=register'">
+					    	Créer un compte
+						</button>
                     </div>
                 </form>
                 <c:if test="${not empty errorMessage}">
@@ -86,18 +54,7 @@
         </div>
     </div>
 
-    <footer>
-        <hr>
-        <div class="footerBox">
-            <nav>
-                <ul class="nav">
-                    <li class="nav-item"><a class="nav-link text-white" href="#"><b>Accueil</b></a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="#"><b>Contacter Nous</b></a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="#"><b>FR</b></a></li>
-                </ul>
-            </nav>
-        </div>
-    </footer>
+    <%@ include file="../footer.jsp" %>
 
 </body>
 </html>
