@@ -1,7 +1,9 @@
 package com.onlineshop.service;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,43 @@ public class ProduitDbService {
 	}
 	// Suppression du constructeur qui acceptait un DataSource, car l'injection est gérée par le conteneur
     // Pas besoin de constructeur explicite, l'injection de dépendance se charge de l'initialisation de dataSource
+	
+	// Méthode de recherche des produis par mot clé
+	public List<Produit> searchProduitsByKeyword(String keyword) throws SQLException {
+		List<Produit> produits = new ArrayList<>();
+		String sql = "SELECT * FROM  `produit` WHERE nom LIKE ? OR description LIKE ?";
+		
+		// Connexion à la base de données et exection de la requête
+		try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            String searchTerm = "%" + keyword + "%"; // Utilisation des jokers pour la recherche partielle
+            stmt.setString(1, searchTerm);
+            stmt.setString(2, searchTerm);
+
+            // Exécution de la requête et récupération des résultats
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Produit produit = new Produit(
+                        rs.getInt("id"),
+                        rs.getString("nom"),
+                        rs.getString("description"),
+                        rs.getDouble("prix"),
+                        rs.getString("image"),
+                        rs.getInt("categorie_id")
+                    );
+                    produits.add(produit);
+                }
+            }
+        }catch(SQLException ex) {
+        	// Loguer l'exception et la relancer pour être capturée dans le contrôleur
+            ex.printStackTrace();
+            throw new SQLException("Erreur lors de la recherche des produits", ex);
+        }
+		
+	    // Retourner la liste des produits (vide si aucun produit n'est trouvé)
+		return produits;
+	}
 	
 	// Methode pour recupérer tous les produits de la bdd
 	public List<Produit> getAllProduits() throws Exception {
@@ -66,6 +105,60 @@ public class ProduitDbService {
 		}
 	}
 	
+	// Méthode pour récupérer les produits par catégorie
+    public List<Produit> getProduitsByCategorie(int categorieId) throws SQLException {
+        List<Produit> produits = new ArrayList<>();
+        String sql = "SELECT * FROM produit WHERE categorie_id = ?";
+        
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setInt(1, categorieId);
+            
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Produit produit = new Produit(
+                        rs.getInt("id"),
+                        rs.getString("nom"),
+                        rs.getString("description"),
+                        rs.getDouble("prix"),
+                        rs.getString("image"),
+                        rs.getInt("categorie_id")
+                    );
+                    produits.add(produit);
+                }
+            }
+        }
+        return produits;
+    }
+	
+ // Méthode pour récupérer un produit par son ID
+    public Produit getProduitById(int produitId) throws SQLException {
+        Produit produit = null;
+        // Connexion à la base de données et requête pour récupérer le produit
+        String sql = "SELECT * FROM produit WHERE id = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, produitId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                // Créer un objet Produit à partir des résultats
+                produit = new Produit();
+                produit.setId(rs.getInt("id"));
+                produit.setNom(rs.getString("nom"));
+                produit.setDescription(rs.getString("description"));
+                produit.setPrix(rs.getDouble("prix"));
+                produit.setImage(rs.getString("image"));
+                produit.setCategorieId(rs.getInt("categorie_id"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            // Propagation de l'exception
+            throw new SQLException("Erreur lors de l'accès à la base de données pour récupérer le produit", ex);
+        }
+        return produit;
+    }
+    
 	private void close(Connection connection, Statement statement, ResultSet resultSet) {
 
 		try {
@@ -81,8 +174,8 @@ public class ProduitDbService {
 				connection.close();
 			}
 		}
-		catch (Exception exc) {
-			exc.printStackTrace();
+		catch (Exception ex) {
+			ex.printStackTrace();
 		}
 	}
 
