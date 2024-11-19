@@ -7,6 +7,7 @@ public class Produit {
     private double prix;
     private String image;
     private int categorieId;
+    private String categorieNom;
 
     // Constructeur
     public Produit() {}
@@ -19,8 +20,36 @@ public class Produit {
         this.image = image;
         this.categorieId = categorieId;
     }
+       
     
- // Getters et setters
+    public Produit(String nom, double prix, String image, int categorieId) {
+		super();
+		this.nom = nom;
+		this.prix = prix;
+		this.image = image;
+		this.categorieId = categorieId;
+	}
+    
+    public Produit(int id, String nom, double prix, String image, int categorieId) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.prix = prix;
+		this.image = image;
+		this.categorieId = categorieId;
+	}
+
+    public Produit(int id, String nom, double prix, String image, int categorieId, String categorieNom) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.prix = prix;
+		this.image = image;
+		this.categorieId = categorieId;
+		this.categorieNom = categorieNom;
+	}
+
+	// Getters et setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
@@ -38,8 +67,16 @@ public class Produit {
 
     public int getCategorieId() { return categorieId; }
     public void setCategorieId(int categorieId) { this.categorieId = categorieId; }
+    
+    public String getCategorieNom() {
+		return categorieNom;
+	}
 
-    @Override
+	public void setCategorieNom(String categorieNom) {
+		this.categorieNom = categorieNom;
+	}
+
+	@Override
     public String toString() {
         return "Produit{" +
                 "id=" + id +

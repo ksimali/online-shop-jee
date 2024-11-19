@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import com.onlineshop.modele.Categorie;
@@ -22,6 +24,16 @@ public class CategorieDbService {
 	// Constructeur qui initialise l'objet dataSource avec la dataSource(la bdd) fournie
 	public CategorieDbService(DataSource dataSource) {
 		this.dataSource = dataSource;
+	}
+	
+	public CategorieDbService() {
+		try {
+            // Récupérer le DataSource à partir de JNDI
+            InitialContext context = new InitialContext();
+            this.dataSource = (DataSource) context.lookup("java:/comp/env/jdbc/onlineshop_bd");
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }
 	}
 	
 	// CREATE - Ajouter une nouvelle catégorie dans la base de données

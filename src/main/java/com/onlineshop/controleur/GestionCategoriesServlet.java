@@ -73,7 +73,8 @@ public class GestionCategoriesServlet extends HttpServlet {
     	     // Mettre a jour une catégorie dans la base de données
                 gestionCategoriesDBService.updateCategorie(id, nom, description);
     		} else if(action.equals("delete")) {
-    			
+    			id = Integer.parseInt(request.getParameter("id"));
+    			gestionCategoriesDBService.deleteCategorie(id);
     		} else {
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Action inconnue!");
     		}

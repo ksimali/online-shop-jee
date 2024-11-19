@@ -75,4 +75,15 @@ public class GestionCategoriesDBService {
             stmt.executeUpdate();
         }
     }
+
+	public void deleteCategorie(int id) throws SQLException {
+		String query = "DELETE FROM categorie WHERE id = ?";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        }
+	}
 }

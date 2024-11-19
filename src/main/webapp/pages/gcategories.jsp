@@ -36,14 +36,66 @@
 	        // Remplace le formulaire avec la bonne action
 	        formCat.innerHTML = "<form action='${pageContext.request.contextPath}/gcategories' method='POST'><input type='hidden' name='action' value='update' />" + formCat.innerHTML + "</form>";
 	    }
+	    
+	    function deleteCategorie(id) {
+            if (confirm("Voulez-vous vraiment supprimer cette categorie ?")) {
+                // Effectuer une requête POST avec fetch
+                fetch("${pageContext.request.contextPath}/gcategories", {
+                    method: "POST", // Méthode HTTP POST
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded" // Type de contenu de la requête
+                    },
+                    body: new URLSearchParams({
+                        action: 'delete', // L'action de suppression
+                        id: id // L'ID du produit à supprimer
+                    })
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Si la suppression a réussi, on recharge la page ou on met à jour la liste
+                        window.location.reload(); // Recharge la page après suppression
+                    } else {
+                        // Si la suppression a échoué, on affiche un message d'erreur
+                        alert('La suppression de la categorie a échoué.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la suppression:', error);
+                    alert('Une erreur est survenue lors de la suppression.');
+                });
+            }
+        }
     </script>
 </head>
 <body>
+	<header class="p-3">
+        <div class="container">
+            <div class="d-flex justify-content-between">
+                <div class="logo">
+                    <h1>Logo</h1>
+                </div>
+                <nav>
+                    <ul class="nav">
+                        <li class="nav-item"><a class="nav-link text-white" href="#"><b>Module Administrateur</b></a></li>
+                    </ul>
+                </nav>
+                <div class="search-bar">
+                    <input type="text" class="form-control" placeholder="Recherche...">
+                </div>
+                <div class="d-flex">
+                    <a href="#" class="btn">Admin</a>
+                </div>
+            </div>
+            <hr>
+        </div>
+    </header>
+
+
     <div class="container mt-5">
         <h5>Gestion de Catégorie</h5>
         <hr>
         <form method="post" action="${pageContext.request.contextPath}/gcategories" class="mb-5 ml-3">
-        	<input type='hidden' name='action' value='create' />"
+        	<input type='hidden' name='action' value='create' />
             <div class="form-row d-flex flex-column">
                 <div class="form-group col-md-6">
                     <label for="nom">Nom:</label>
@@ -54,7 +106,7 @@
                     <input type="text" class="form-control transparent-input" id="description" name="description" placeholder="Entrez la description de la catégorie">
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Enregistrer</button>
+            <button type="submit" class="btn-action-modif">Enregistrer</button>
         </form>
 
 	<div id="formCat">
