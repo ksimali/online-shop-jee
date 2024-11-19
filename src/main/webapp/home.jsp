@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/styles.css">
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     <!-- Inclure l'en-tête -->
     <%@ include file="header.jsp" %>
 

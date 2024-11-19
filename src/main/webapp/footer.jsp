@@ -1,6 +1,6 @@
     
 <!-- Footer -->
-   <footer class="bg-light text-dark py-3">
+   <footer class="bg-light text-dark py-3 mt-auto">
         <div class="container">
             <nav>
                 <ul class="nav justify-content-end">
