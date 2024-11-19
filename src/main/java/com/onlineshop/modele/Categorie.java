@@ -15,7 +15,17 @@ public class Categorie {
         this.description = description;
     }
 
-    // Getters et setters
+    public Categorie(int categorieId, String categorieNom) {
+    	this.id = categorieId;
+        this.nom = categorieNom;
+    }
+
+	public Categorie(int categorieId) {
+		// TODO Auto-generated constructor stub
+		this.id = categorieId;
+	}
+
+	// Getters et setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
