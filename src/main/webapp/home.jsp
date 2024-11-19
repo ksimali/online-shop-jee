@@ -19,29 +19,7 @@
 
     <div class="container mt-5">
         <div class="row">
-            <!-- Inclure le menu latéral -->
-            <div id="sidebar" class="col-md-3">
-                <aside class="p-3">
-                	<h5> Les catégories</h6>
-                    <ul class="list-group">
-                    	<!-- Utiliser un scriptlet pour boucler sur les catégories pas si simple cette affaire OMG :-(-->
-        				<% 
-        					List<Categorie> categories = (List<Categorie>) request.getAttribute("categories");
-	        				if (categories != null && !categories.isEmpty()) {
-	        	                for (Categorie categorie : categories) {
-        				%>
-                        			<li class="list-group-item"><%= categorie.getNom() %></li>
-                        <%
-	        	                }
-	        				} else {
-                        %>
-                        		 <li class="list-group-item">Aucune catégorie disponible.</li>
-                    	<%
-	        				}
-                    	%>
-                    </ul>
-                </aside>
-            </div>
+            <%@ include file="aside.jsp" %>
 
             <div class="col-md-9">
                 <div class="row">
