@@ -38,5 +38,10 @@
         <url-pattern>/js/*</url-pattern>
         <url-pattern>/images/*</url-pattern>
     </servlet-mapping>
+    
+    <!--  Periode de la session -->
+    <session-config>
+    <session-timeout>30</session-timeout> <!-- 30 minutes -->
+	</session-config>
 
 </web-app>

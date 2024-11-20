@@ -12,7 +12,7 @@
 </head>
 <body>
     <!-- Inclure l'en-tête -->
-    <%@ include file="../header.jsp" %>
+   	<%@ include file="../header.jsp" %>
 
     <div class="container mt-5">
         <div class="row">
@@ -142,18 +142,7 @@
         </div>
     </div>
 
-    <footer>
-        <hr>
-        <div class="footerBox">
-            <nav>
-                <ul class="nav">
-                    <li class="nav-item"><a class="nav-link text-white" href="#"><b>Accueil</b></a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="#"><b>Contacter Nous</b></a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="#"><b>FR</b></a></li>
-                </ul>
-            </nav>
-        </div>
-    </footer>
+    <%@ include file="../footer.jsp" %>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

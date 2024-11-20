@@ -48,13 +48,21 @@ CREATE TABLE IF NOT EXISTS produit (
     FOREIGN KEY (categorie_id) REFERENCES categorie(id)
 );
 
-CREATE TABLE IF NOT EXISTS panier (
+CREATE TABLE panier (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    client_id INT,
-    produit_id INT,
-    quantite INT,
-    FOREIGN KEY (client_id) REFERENCES client(id),
-    FOREIGN KEY (produit_id) REFERENCES produit(id)
+    client_id INT NOT NULL,
+    total DECIMAL(10, 2) NOT NULL,
+    date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (client_id) REFERENCES client(id) ON DELETE CASCADE
+);
+
+CREATE TABLE produit_panier (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    panier_id INT NOT NULL,
+    produit_id INT NOT NULL,
+    quantite INT NOT NULL,
+    FOREIGN KEY (panier_id) REFERENCES panier(id) ON DELETE CASCADE,
+    FOREIGN KEY (produit_id) REFERENCES produit(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS commande (
