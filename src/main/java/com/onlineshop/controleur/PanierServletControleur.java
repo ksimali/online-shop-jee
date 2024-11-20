@@ -2,6 +2,7 @@ package com.onlineshop.controleur;
 
 import com.onlineshop.modele.Panier;
 import com.onlineshop.modele.Produit;
+import com.onlineshop.modele.ProduitPanier;
 import com.onlineshop.service.CategorieDbService;
 import com.onlineshop.service.PanierDbService;
 import com.onlineshop.service.ProduitDbService;
@@ -16,17 +17,45 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/panier")
 public class PanierServletControleur extends HttpServlet {
 
 	// Attribut pour la datasource permettant d'obtenir des connexion à la bd
-		@Resource(name="jdbc/onlineshop_bd")
-		private DataSource dataSource;
-			
-		// Declarations de références de ProduitDbService et CategorieDbService
-		private ProduitDbService produitDbService;
-	    private CategorieDbService categorieDbService;
+	@Resource(name="jdbc/onlineshop_bd")
+	private DataSource dataSource;
+		
+	// Declarations de références de ProduitDbService et CategorieDbService
+	private ProduitDbService produitDbService;
+    private CategorieDbService categorieDbService;
+	    
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Récupérer la session et le panier de l'utilisateur
+        HttpSession session = request.getSession();
+        Panier panier = (Panier) session.getAttribute("panier");
+
+        // Si le panier n'existe pas, en créer un vide
+        if (panier == null) {
+            panier = new Panier();
+            session.setAttribute("panier", panier);
+        }
+
+        // Récupérer la liste des produits dans le panier
+        List<ProduitPanier> produitsDansPanier = panier.getProduits();
+
+        // Calculer le total du panier (si nécessaire)
+        double totalPanier = panier.calculerTotal();
+
+        // Ajouter les informations du panier à la requête
+        request.setAttribute("panier", panier);
+        request.setAttribute("produitsDansPanier", produitsDansPanier);
+        request.setAttribute("totalPanier", totalPanier);
+
+        // Rediriger vers la page panier.jsp
+        request.getRequestDispatcher("/panier.jsp").forward(request, response);
+    }
 	    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

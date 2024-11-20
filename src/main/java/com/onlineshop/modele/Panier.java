@@ -68,11 +68,12 @@ public class Panier {
                 '}';
     }
 
-    // Méthode de calcul du total
-    public void calculerTotal() {
+    // Méthode de calcul du total, qui retourne le montant total calculé
+    public double calculerTotal() {
         total = produits.stream()
                 .mapToDouble(p -> p.getProduit().getPrix() * p.getQuantite())
                 .sum();
+        return total; // Retourner le montant total calculé
     }
 
     // Ajouter un produit au panier
