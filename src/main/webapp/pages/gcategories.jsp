@@ -72,17 +72,18 @@
         <div class="container">
             <div class="d-flex justify-content-between">
                 <div class="logo">
-                    <h1>Logo</h1>
+                    <h1>onlineshop</h1>
                 </div>
                 <nav>
                     <ul class="nav">
-                        <li class="nav-item"><a class="nav-link text-white" href="#"><b>Module Administrateur</b></a></li>
+                        <li class="nav-item"><a class="nav-link text-white" href="${pageContext.request.contextPath}/pages/accueilAdmin.jsp"><b>Module Administrateur</b></a></li>
                     </ul>
                 </nav>
                 <div class="search-bar">
                     <input type="text" class="form-control" placeholder="Recherche...">
                 </div>
                 <div class="d-flex">
+                    <a href="${pageContext.request.contextPath}/auth?action=logout" class="btn">Se deconnecter</a>
                     <a href="#" class="btn">Admin</a>
                 </div>
             </div>
