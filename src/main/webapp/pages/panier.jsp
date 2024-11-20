@@ -90,7 +90,7 @@
                      <form action="<%= request.getContextPath() %>/" method="get">
                         <button type="submit" class="btn btn-secondary">Continuer à magasiner</button>
                     </form>
-                    <form action="acheter.jsp" method="get">
+                    <form action="enregistrer" method="get">
                         <button type="submit" class="btn btn-success">Acheter</button>
                     </form>
                 </div>
