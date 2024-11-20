@@ -40,7 +40,19 @@
 					                        <h5 class="card-title"><%= produit.getNom() %></h5>
 					                        <p class="card-text"><%= produit.getDescription() %></p>
 					                        <p class="card-text"><%= produit.getPrix() %> $</p>
-					                        <a href="#" class="btn-ajouter">Ajouter</a>
+					                        <!-- Formulaire pour ajouter un produit au panier -->
+								            <div class="d-flex justify-content-end">
+								            	<form action="panier" method="POST">
+									                <input type="hidden" name="action" value="ajouter">
+									                <input type="hidden" name="produitId" value="<%= produit.getId() %>">
+									                <input type="hidden" name="nomProduit" value="<%= produit.getNom() %>">
+									                <input type="hidden" name="prixProduit" value="<%= produit.getPrix() %>">
+									                <!-- Pas de champ de quantité, la quantité est définie à 1 par défaut -->
+    												<input type="hidden" name="quantite" value="1"> <!-- Quantité fixe à 1 -->
+									                <button type="submit" class="btn btn-primary">Ajouter</button>
+								            	</form>
+								            </div>
+								            
 					                    </div>
 					                </div>
 					            </div>
