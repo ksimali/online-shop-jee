@@ -3,53 +3,80 @@ package com.onlineshop.service;
 import com.onlineshop.modele.Panier;
 import com.onlineshop.modele.ProduitPanier;
 
+import javax.annotation.Resource;
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class PanierDbService {
-    private Connection connection;
 
-    // Constructeur : initialise la connexion à la base de données
-    public PanierDbService(Connection connection) {
-        this.connection = connection;
+    @Resource(name = "jdbc/onlineshop_bd")
+    private DataSource dataSource;
+
+    public PanierDbService(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     /**
-     * Enregistre le contenu du panier dans la base de données lors de l'achat.
-     * @param panier L'objet Panier contenant les produits.
-     * @param clientId L'identifiant du client qui réalise l'achat.
-     * @return true si l'opération réussit, false sinon.
+     * Enregistre le panier dans la base de données.
+     * @param panier Le panier à enregistrer.
+     * @param clientId L'ID du client associé.
+     * @return L'ID du panier inséré ou -1 en cas d'erreur.
      */
-    public boolean enregistrerPanier(Panier panier, int clientId) {
-        String insertPanierSQL = "INSERT INTO panier (client_id, total) VALUES (?, ?)";
-        String insertProduitSQL = "INSERT INTO produit_panier (panier_id, produit_id, quantite) VALUES (?, ?, ?)";
+    public int enregistrerPanier(Panier panier, int clientId) {
+        String sqlInsertPanier = "INSERT INTO panier (client_id, total) VALUES (?, ?)";
+        
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sqlInsertPanier, PreparedStatement.RETURN_GENERATED_KEYS)) {
+             
+            // Définir les paramètres de la requête
+            ps.setInt(1, clientId);
+            ps.setDouble(2, panier.getTotal());
 
-        try {
-            // Enregistrer le panier et récupérer l'ID généré
-            PreparedStatement panierStmt = connection.prepareStatement(insertPanierSQL, PreparedStatement.RETURN_GENERATED_KEYS);
-            panierStmt.setInt(1, clientId);
-            panierStmt.setDouble(2, panier.getTotal());
-            panierStmt.executeUpdate();
+            // Exécuter la requête d'insertion
+            int rowsAffected = ps.executeUpdate();
 
-            ResultSet rs = panierStmt.getGeneratedKeys();
-            if (rs.next()) {
-                int panierId = rs.getInt(1);
-
-                // Ajouter chaque produit dans la table `produit_panier`
-                PreparedStatement produitStmt = connection.prepareStatement(insertProduitSQL);
-                for (ProduitPanier produitPanier : panier.getProduits()) {
-                    produitStmt.setInt(1, panierId);
-                    produitStmt.setInt(2, produitPanier.getProduit().getId());
-                    produitStmt.setInt(3, produitPanier.getQuantite());
-                    produitStmt.executeUpdate();
+            // Vérifier si une ligne a été insérée
+            if (rowsAffected > 0) {
+                // Récupérer les clés générées
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        return rs.getInt(1); // Retourner l'ID généré
+                    }
                 }
-                return true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+
+        return -1; // Retourner -1 en cas d'erreur
+    }
+
+
+    /**
+     * Enregistre les produits associés au panier.
+     * @param panierId L'ID du panier auquel les produits sont associés.
+     * @param produits La liste des produits du panier.
+     */
+    public void enregistrerProduitsDuPanier(int panierId, List<ProduitPanier> produits) {
+        String sqlInsertProduit = "INSERT INTO produit_panier (panier_id, produit_id, quantite) VALUES (?, ?, ?)";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sqlInsertProduit)) {
+
+            for (ProduitPanier produitPanier : produits) {
+                ps.setInt(1, panierId);
+                ps.setInt(2, produitPanier.getProduit().getId());
+                ps.setInt(3, produitPanier.getQuantite());
+                ps.addBatch();
+            }
+
+            ps.executeBatch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
