@@ -56,19 +56,19 @@
                                 <td class="align-middle"><%= produit.getNom() %></td>
                                 <td class="align-middle"><%= String.format("%.2f", produit.getPrix()) %>€</td>
                                 <td class="align-middle">
-                                    <form action="<%= request.getContextPath() %>/panier" method="POST">
+                                    <form action="<%= request.getContextPath() %>/panier" method="POST" class="d-inline">
 									    <input type="hidden" name="action" value="modifier">
 									    <input type="hidden" name="produitId" value="<%= produit.getId() %>">
 									    <input type="number" class="form-control" name="quantite_<%= produit.getId() %>" value="<%= produitPanier.getQuantite() %>" min="1">
-									    <button type="submit">Modifier</button>
+									    <button type="submit" class="btn btn-primary btn-sm ml-2">Modifier</button>
 									</form>
                                 
                                 </td>
                                 <td class="text-center align-middle">
-                                    <form action="<%= request.getContextPath() %>/panier" method="POST">
+                                    <form action="<%= request.getContextPath() %>/panier" method="POST" class="d-inline">
 									    <input type="hidden" name="action" value="supprimer">
 									    <input type="hidden" name="produitId" value="<%= produit.getId() %>">
-									    <button type="submit">Supprimer</button>
+									    <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
 									</form>
                                 </td>
                             </tr>
