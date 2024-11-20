@@ -100,6 +100,7 @@ public class Panier {
                 return;
             }
         }
+        throw new IllegalArgumentException("Produit introuvable dans le panier.");
     }
 
     // Supprimer un produit du panier
@@ -113,4 +114,14 @@ public class Panier {
         produits.clear();
         total = 0.0;
     }
+
+    public ProduitPanier getProduitParId(int produitId) {
+        for (ProduitPanier produitPanier : produits) {
+            if (produitPanier.getProduit().getId() == produitId) {
+                return produitPanier; // Retourne le produit trouvé dans le panier
+            }
+        }
+        return null; // Retourne null si le produit n'est pas dans le panier
+    }
+
 }
