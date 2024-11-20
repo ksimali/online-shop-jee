@@ -5,8 +5,8 @@ import java.sql.Timestamp;
 public class Administrateur extends Utilisateur {
     // Constructeur
 	public Administrateur(int id, String nom, String prenom, String email, String motDePasse,
-			Timestamp dateInscription) {
-		super(id, nom, prenom, email, motDePasse, dateInscription);
+			Timestamp dateInscription, String telephone) {
+		super(id, nom, prenom, email, motDePasse, dateInscription, telephone);
 	}
 }
 

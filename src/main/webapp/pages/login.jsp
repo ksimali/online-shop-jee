@@ -16,7 +16,8 @@
 
     <div class="container mt-5">
         <div class="row">
-           <%@ include file="../aside.jsp" %>
+            <!-- Inclure le menu latéral -->
+            <%@ include file="../aside.jsp" %>
 
             <div class="col-md-9">
                 

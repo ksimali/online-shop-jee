@@ -14,7 +14,7 @@
 					<c:if test="${not empty categories}">
 					    <!-- Boucler sur la liste des catégories -->
 					    <c:forEach var="categorie" items="${categories}">
-					        <li><a class="list-group-item" href="?categorieId=${categorie.id}">${categorie.nom}</a></li>
+					        <li><a class="list-group-item text-white" href="home?categorieId=${categorie.id}">${categorie.nom}</a></li>
 					    </c:forEach>
 					</c:if>
 					
