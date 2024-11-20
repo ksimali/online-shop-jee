@@ -15,5 +15,6 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/javax.servlet.jsp.jstl-1.2.5.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/javax.servlet.jsp.jstl-api-1.2.1.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/javax.servlet-api-4.0.1.jar"/>
+	<classpathentry kind="lib" path="/Users/ksim/Desktop/webserver/javaEE_Spring/code/librairies-jstl/taglibs-standard-impl-1.2.5.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
