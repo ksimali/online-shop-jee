@@ -1,24 +1,58 @@
 package com.onlineshop.modele;
 
-import java.util.Date;
-import java.util.List;
+import java.sql.Date;
 
 public class Commande {
     private int id;
-    private int clientId; // Référence au client
-    private Date dateCommande; // Date de la commande
-    private List<Produit> produits; // Liste des produits commandés
-    private double total; // Montant total de la commande
-    private String statut; // Statut de la commande (en cours, expédiée, annulée)
+    private int clientId;
+    private Date dateCommande;         // Utilisation de java.sql.Date pour DateTime en base
+    private Date dateLivraison;        // Utilisation de java.sql.Date pour DateTime en base
+    private double total;
+    private String nom;
+    private String prenom;
+    private String telephone;
+    private String courriel;
+    private String adresse;
+    private String ville;
+    private String province;
+    private String pays;
+    private String codePostal;
+    private String adresseLivraison;
+    private String villeLivraison;
+    private String provinceLivraison;
+    private String paysLivraison;
+    private String codePostalLivraison;
+    private String numeroCarteCredit;
+    private Date dateExpiration;       // Utilisation de java.sql.Date pour Date en base
+    private String ccv;
 
-    // Constructeur
-    public Commande(int id, int clientId, Date dateCommande, List<Produit> produits, double total, String statut) {
-        this.id = id;
+    // Constructeur sans l'ID (l'ID est généré par la base de données)
+    public Commande(int clientId, Date dateCommande, Date dateLivraison, double total, String nom, String prenom,
+                    String telephone, String courriel, String adresse, String ville, String province,
+                    String pays, String codePostal, String adresseLivraison, String villeLivraison,
+                    String provinceLivraison, String paysLivraison, String codePostalLivraison,
+                    String numeroCarteCredit, Date dateExpiration, String ccv) {
         this.clientId = clientId;
         this.dateCommande = dateCommande;
-        this.produits = produits;
+        this.dateLivraison = dateLivraison;
         this.total = total;
-        this.statut = statut;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.telephone = telephone;
+        this.courriel = courriel;
+        this.adresse = adresse;
+        this.ville = ville;
+        this.province = province;
+        this.pays = pays;
+        this.codePostal = codePostal;
+        this.adresseLivraison = adresseLivraison;
+        this.villeLivraison = villeLivraison;
+        this.provinceLivraison = provinceLivraison;
+        this.paysLivraison = paysLivraison;
+        this.codePostalLivraison = codePostalLivraison;
+        this.numeroCarteCredit = numeroCarteCredit;
+        this.dateExpiration = dateExpiration;
+        this.ccv = ccv;
     }
 
     // Getters et setters
@@ -46,12 +80,12 @@ public class Commande {
         this.dateCommande = dateCommande;
     }
 
-    public List<Produit> getProduits() {
-        return produits;
+    public Date getDateLivraison() {
+        return dateLivraison;
     }
 
-    public void setProduits(List<Produit> produits) {
-        this.produits = produits;
+    public void setDateLivraison(Date dateLivraison) {
+        this.dateLivraison = dateLivraison;
     }
 
     public double getTotal() {
@@ -62,12 +96,140 @@ public class Commande {
         this.total = total;
     }
 
-    public String getStatut() {
-        return statut;
+    public String getNom() {
+        return nom;
     }
 
-    public void setStatut(String statut) {
-        this.statut = statut;
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getCourriel() {
+        return courriel;
+    }
+
+    public void setCourriel(String courriel) {
+        this.courriel = courriel;
+    }
+
+    public String getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
+    }
+
+    public String getVille() {
+        return ville;
+    }
+
+    public void setVille(String ville) {
+        this.ville = ville;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getPays() {
+        return pays;
+    }
+
+    public void setPays(String pays) {
+        this.pays = pays;
+    }
+
+    public String getCodePostal() {
+        return codePostal;
+    }
+
+    public void setCodePostal(String codePostal) {
+        this.codePostal = codePostal;
+    }
+
+    public String getAdresseLivraison() {
+        return adresseLivraison;
+    }
+
+    public void setAdresseLivraison(String adresseLivraison) {
+        this.adresseLivraison = adresseLivraison;
+    }
+
+    public String getVilleLivraison() {
+        return villeLivraison;
+    }
+
+    public void setVilleLivraison(String villeLivraison) {
+        this.villeLivraison = villeLivraison;
+    }
+
+    public String getProvinceLivraison() {
+        return provinceLivraison;
+    }
+
+    public void setProvinceLivraison(String provinceLivraison) {
+        this.provinceLivraison = provinceLivraison;
+    }
+
+    public String getPaysLivraison() {
+        return paysLivraison;
+    }
+
+    public void setPaysLivraison(String paysLivraison) {
+        this.paysLivraison = paysLivraison;
+    }
+
+    public String getCodePostalLivraison() {
+        return codePostalLivraison;
+    }
+
+    public void setCodePostalLivraison(String codePostalLivraison) {
+        this.codePostalLivraison = codePostalLivraison;
+    }
+
+    public String getNumeroCarteCredit() {
+        return numeroCarteCredit;
+    }
+
+    public void setNumeroCarteCredit(String numeroCarteCredit) {
+        this.numeroCarteCredit = numeroCarteCredit;
+    }
+
+    public Date getDateExpiration() {
+        return dateExpiration;
+    }
+
+    public void setDateExpiration(Date dateExpiration) {
+        this.dateExpiration = dateExpiration;
+    }
+
+    public String getCcv() {
+        return ccv;
+    }
+
+    public void setCcv(String ccv) {
+        this.ccv = ccv;
     }
 
     @Override
@@ -76,10 +238,25 @@ public class Commande {
                 "id=" + id +
                 ", clientId=" + clientId +
                 ", dateCommande=" + dateCommande +
-                ", produits=" + produits +
+                ", dateLivraison=" + dateLivraison +
                 ", total=" + total +
-                ", statut='" + statut + '\'' +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", courriel='" + courriel + '\'' +
+                ", adresse='" + adresse + '\'' +
+                ", ville='" + ville + '\'' +
+                ", province='" + province + '\'' +
+                ", pays='" + pays + '\'' +
+                ", codePostal='" + codePostal + '\'' +
+                ", adresseLivraison='" + adresseLivraison + '\'' +
+                ", villeLivraison='" + villeLivraison + '\'' +
+                ", provinceLivraison='" + provinceLivraison + '\'' +
+                ", paysLivraison='" + paysLivraison + '\'' +
+                ", codePostalLivraison='" + codePostalLivraison + '\'' +
+                ", numeroCarteCredit='" + numeroCarteCredit + '\'' +
+                ", dateExpiration=" + dateExpiration +
+                ", ccv='" + ccv + '\'' +
                 '}';
     }
 }
-
