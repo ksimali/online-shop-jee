@@ -1,11 +1,13 @@
 package com.onlineshop.controleur;
 
+import com.onlineshop.modele.Categorie;
 import com.onlineshop.modele.Panier;
 import com.onlineshop.modele.Produit;
 import com.onlineshop.modele.ProduitPanier;
 import com.onlineshop.service.CategorieDbService;
 import com.onlineshop.service.PanierDbService;
 import com.onlineshop.service.ProduitDbService;
+import com.onlineshop.service.UtilisateurDbService;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet("/panier")
@@ -30,10 +33,32 @@ public class PanierServletControleur extends HttpServlet {
 	private ProduitDbService produitDbService;
     private CategorieDbService categorieDbService;
     private PanierDbService panierDbService;
+    
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public PanierServletControleur() {
+        super();
+        categorieDbService = new CategorieDbService();
+    }
 	    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Récupérer la session et le panier de l'utilisateur
+    	// Récupérer les catégories via les services
+        List<Categorie> categories;
+		try {
+			categories = categorieDbService.getAllCategories();
+			
+			System.out.println("Catégories: " + categories);
+	        
+	        // Ajouter les produits et les catégories dans l'objet requête
+	        request.setAttribute("categories", categories);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+    	// Récupérer la session et le panier de l'utilisateur
         HttpSession session = request.getSession();
         Panier panier = (Panier) session.getAttribute("panier");
 
