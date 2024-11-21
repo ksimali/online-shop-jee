@@ -108,7 +108,6 @@ public class EnregistrerCommandeServletControleur extends HttpServlet {
             
             // Récupérer les autres données du formulaire
             //int clientId = Integer.parseInt(request.getParameter("clientId"));
-            Date dateCommande = Date.valueOf(request.getParameter("dateCommande"));
             Date dateLivraison = Date.valueOf(request.getParameter("dateLivraison"));
             double total = Double.parseDouble(request.getParameter("total"));
             String nom = request.getParameter("nom");
