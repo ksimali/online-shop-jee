@@ -67,16 +67,11 @@ public class PanierServletControleur extends HttpServlet {
         // Si le panier n'existe pas encore, en créer un
         if (panier == null) {
             panier = new Panier();
-            session.setAttribute("panier", panier); 
+            session.setAttribute("panier", panier);
         }
 
         // Identifier l'action à effectuer (ajouter, modifier, supprimer, acheter)
         String action = request.getParameter("action");
-        
-        if (action == null) {
-            response.sendRedirect("generalError.jsp");
-            return;
-        }
         
         try {
         	
@@ -98,7 +93,7 @@ public class PanierServletControleur extends HttpServlet {
 	                break;
 	
 	            default:
-	                response.sendRedirect("generalError.jsp");
+	                response.sendRedirect("erreur.jsp");
 	                return;
         	}
         	
@@ -118,14 +113,15 @@ public class PanierServletControleur extends HttpServlet {
     }
 
     // Methode pour ajouter un produit au panier
-    private void ajouterProduitAuPanier(HttpServletRequest request, HttpServletResponse response, Panier panier) throws ServletException, IOException {
+    private void ajouterProduitAuPanier(HttpServletRequest request, HttpServletResponse response, Panier panier) {
         try {
+            // Récupérer les paramètres du produit
             int produitId = Integer.parseInt(request.getParameter("produitId"));
             int quantite = 1; // La quantité est fixée à 1 par défaut
             String nomProduit = request.getParameter("nomProduit");
             double prixProduit = Double.parseDouble(request.getParameter("prixProduit"));
 
-            // Créer le produit
+            // Créer le produit à ajouter au panier
             Produit produit = new Produit(produitId, nomProduit, "", prixProduit, "", 0);
 
             // Vérifier si le produit existe déjà dans le panier
@@ -138,12 +134,21 @@ public class PanierServletControleur extends HttpServlet {
                 // Si le produit n'existe pas, l'ajouter avec une quantité de 1
                 panier.ajouterProduit(produit, quantite);
             }
-
+            
+            // LOG : Affichez le contenu du panier dans la console
             System.out.println("Contenu du panier après ajout : " + panier.getProduits());
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
+            // Gérer l'erreur de conversion si un champ est mal formaté
             e.printStackTrace();
-            request.setAttribute("erreur", "Erreur lors de l'ajout du produit.");
-            forwardToErrorPage(request, response);
+            request.setAttribute("erreur", "Erreur lors de l'ajout du produit. Les données sont mal formatées.");
+
+            // Redirection vers une page d'erreur plutôt que de tenter un forward
+            try {
+                request.getRequestDispatcher("generalError.jsp").forward(request, response);
+            } catch (ServletException | IOException ex) {
+                ex.printStackTrace();
+            }
+            return;  // Assurez-vous de sortir de la méthode après le forward.
         }
     }
 
@@ -151,27 +156,33 @@ public class PanierServletControleur extends HttpServlet {
     // Methode qui modifie la quantité d'un produit dans le panier
     private void modifierQuantiteProduit(HttpServletRequest request, Panier panier) {
         try {
-            // Récupérer les paramètres
+            // Récupérer l'ID du produit et la quantité modifiée depuis le formulaire
             int produitId = Integer.parseInt(request.getParameter("produitId"));
-            System.out.println("Produit ID : " + produitId);
+            String quantiteParam = request.getParameter("quantite_" + produitId);
+            int nouvelleQuantite = Integer.parseInt(quantiteParam);
+            
+            System.out.println("Nouvelle Quantité : " + nouvelleQuantite);
 
-            int nouvelleQuantite = Integer.parseInt(request.getParameter("quantite_" + produitId));
-            System.out.println("Nouvelle quantité : " + nouvelleQuantite);
-
-            // Vérification de la quantité et modification
+            // Vérifier que la quantité est valide (positive)
             if (nouvelleQuantite <= 0) {
-                panier.supprimerProduit(produitId);
+                panier.supprimerProduit(produitId); // Supprimer si la quantité est inférieure ou égale à 0
+                System.out.println("Produit supprimé du panier : " + produitId);
             } else {
-                panier.modifierQuantite(produitId, nouvelleQuantite);
+                // Vérifier que le produit existe dans le panier
+                ProduitPanier produitPanier = panier.getProduitParId(produitId);
+                if (produitPanier != null) {
+                    // Modifier la quantité si elle est valide
+                    panier.modifierQuantite(produitId, nouvelleQuantite);
+                    System.out.println("Quantité modifiée pour le produit : " + produitPanier.getProduit().getNom() + " -> " + nouvelleQuantite);
+                } else {
+                    System.out.println("Produit introuvable dans le panier : ID " + produitId);
+                }
             }
-
-            System.out.println("Quantité modifiée pour le produit ID " + produitId);
         } catch (NumberFormatException e) {
-            System.err.println("Erreur de format pour la quantité : " + e.getMessage());
+            System.err.println("Erreur de format dans la modification de la quantité : " + e.getMessage());
             e.printStackTrace();
         }
     }
-
 
 
     // Methode qui supprime un produit du panier
@@ -215,11 +226,5 @@ public class PanierServletControleur extends HttpServlet {
             response.sendRedirect("erreur.jsp");
         }
     }
-    
-    private void forwardToErrorPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("generalError.jsp").forward(request, response);
-    }
-    
-    
 
 } 
