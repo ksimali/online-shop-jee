@@ -9,8 +9,9 @@ public class Utilisateur {
 	 private String email;
 	 private String motDePasse; // Stockez le mot de passe sous forme hachée
 	 private Timestamp dateInscription;
+	 private String telephone;
 
-	public Utilisateur(int id, String nom, String prenom, String email, String motDePasse, Timestamp dateInscription) {
+	public Utilisateur(int id, String nom, String prenom, String email, String motDePasse, Timestamp dateInscription, String telephone) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -18,6 +19,7 @@ public class Utilisateur {
 		this.email = email;
 		this.motDePasse = motDePasse;
 		this.dateInscription = dateInscription;
+		this.telephone = telephone;
 	}
 
 	public Utilisateur() {
@@ -71,10 +73,18 @@ public class Utilisateur {
 	public void setDateInscription(Timestamp dateInscription) {
 		this.dateInscription = dateInscription;
 	}
+	
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
 
 	@Override
 	public String toString() {
 		return "Utilisateur [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email + ", motDePasse="
-				+ motDePasse + ", dateInscription=" + dateInscription + "]";
+				+ motDePasse + ", dateInscription=" + dateInscription + ", telephone=" + telephone + "]";
 	}
 }

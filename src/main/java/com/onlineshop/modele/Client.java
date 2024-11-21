@@ -1,8 +1,10 @@
 package com.onlineshop.modele;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 public class Client extends Utilisateur {
+	private Date dateNaissance;
     private String adresseDomicile;
     private String villeDomicile;
     private String provinceDomicile;
@@ -22,8 +24,8 @@ public class Client extends Utilisateur {
     public Client(int id, String nom, String prenom, String email, String motDePasse, Timestamp dateInscription,
 			String adresseDomicile, String villeDomicile, String provinceDomicile, String paysDomicile,
 			String codepostalDomicile, String adresseLivraison, String villeLivraison, String provinceLivraison,
-			String paysLivraison, String codepostalLivraison) {
-		super(id, nom, prenom, email, motDePasse, dateInscription);
+			String paysLivraison, String codepostalLivraison, String telephone, Date dateNaissance) {
+		super(id, nom, prenom, email, motDePasse, dateInscription, telephone);
 		this.adresseDomicile = adresseDomicile;
 		this.villeDomicile = villeDomicile;
 		this.provinceDomicile = provinceDomicile;
@@ -34,6 +36,7 @@ public class Client extends Utilisateur {
 		this.provinceLivraison = provinceLivraison;
 		this.paysLivraison = paysLivraison;
 		this.codepostalLivraison = codepostalLivraison;
+		this.dateNaissance = dateNaissance;
 	}
 
 	public String getAdresseDomicile() {
@@ -116,9 +119,17 @@ public class Client extends Utilisateur {
 		this.codepostalLivraison = codepostalLivraison;
 	}
 
+	public Date getDateNaissance() {
+		return dateNaissance;
+	}
+
+	public void setDateNaissance(Date dateNaissance) {
+		this.dateNaissance = dateNaissance;
+	}
+
 	@Override
 	public String toString() {
-		return "Informations additionnelles: [adresseDomicile=" + adresseDomicile + ", villeDomicile=" + villeDomicile + ", provinceDomicile="
+		return "Informations additionnelles: [dateNaissance=" + dateNaissance + ", adresseDomicile=" + adresseDomicile + ", villeDomicile=" + villeDomicile + ", provinceDomicile="
 				+ provinceDomicile + ", paysDomicile=" + paysDomicile + ", codepostalDomicile=" + codepostalDomicile
 				+ ", adresseLivraison=" + adresseLivraison + ", villeLivraison=" + villeLivraison
 				+ ", provinceLivraison=" + provinceLivraison + ", paysLivraison=" + paysLivraison

@@ -60,6 +60,15 @@ public class HomeServletControleur extends HttpServlet {
     @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	try {
+    		String newUser = request.getParameter("newUser");
+    		if("1".equals(newUser)) {
+                request.setAttribute("newUser", "Votre compte a ete cree avec succes.");
+    		}
+    		String newUpdate = request.getParameter("newUpdate");
+    		if("1".equals(newUpdate)) {
+                request.setAttribute("newUpdate", "Votre modifications ont ete effectuees avec succes.");
+    		}
+    		
     		// Récupérer le mot-clé de la barre de recherche et de la categorie
     		String keyword = request.getParameter("search");
     		String categoryIdStr = request.getParameter("categorieId");

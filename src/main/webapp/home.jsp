@@ -23,6 +23,12 @@
             <%@ include file="aside.jsp" %>
 
             <div class="col-md-9">
+            	<c:if test="${not empty newUser}">
+                    <div class="alert alert-primary">${newUser}</div>
+                </c:if>
+                <c:if test="${not empty newUpdate}">
+                    <div class="alert alert-primary">${newUpdate}</div>
+                </c:if>
                 <div class="row">
                     <% 
 					    // Récupérer la liste des produits depuis l'attribut de la requête
