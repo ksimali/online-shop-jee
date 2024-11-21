@@ -25,7 +25,7 @@
                             <th scope="col">Nom</th>
                             <th scope="col">Prénom</th>
                             <th scope="col">Courriel</th>
-                            <th scope="col">Adresse</th>
+                            <th scope="col">Adresse de Livraison</th>
                             <th scope="col">Date de Commande</th>
                             <th scope="col">Date de Livraison</th>
                         </tr>
