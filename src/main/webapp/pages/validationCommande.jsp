@@ -175,7 +175,7 @@
                         <div class="form-group col-md-6">
                             <label for="dateExpiration">Date d'Expiration</label>
                             <input type="text" id="dateExpiration" name="dateExpiration" class="form-control" 
-           							placeholder="MM/AAAA" pattern="^(0[1-9]|1[0-2])\/\d{4}$" required>
+           							placeholder="MM/AA" pattern="^(0[1-9]|1[0-2])\/\d{2}$" required>
                         </div>
                     </div>
                     <div class="form-row">
