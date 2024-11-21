@@ -24,7 +24,8 @@
                         <tr>
                             <th scope="col">Nom</th>
                             <th scope="col">Prénom</th>
-                            <th scope="col">Total</th>
+                            <th scope="col">Courriel</th>
+                            <th scope="col">Adresse</th>
                             <th scope="col">Date de Commande</th>
                             <th scope="col">Date de Livraison</th>
                         </tr>
@@ -33,7 +34,8 @@
                         <tr>
                             <td>${commande.nom}</td>
                             <td>${commande.prenom}</td>
-                            <td>${commande.total}</td>
+                             <td>${commande.courriel}</td>
+                            <td>${commande.adresseLivraison}</td>
                             <td>${commande.dateCommande}</td>
                             <td>${commande.dateLivraison}</td>
                         </tr>
