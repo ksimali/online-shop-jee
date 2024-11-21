@@ -103,7 +103,10 @@ public class EnregistrerCommandeServletControleur extends HttpServlet {
 	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            // Récupérer les données du formulaire
+        	// Récupérer la date actuelle comme date de commande
+            Date dateCommande = new Date(System.currentTimeMillis());
+            
+            // Récupérer les autres données du formulaire
             //int clientId = Integer.parseInt(request.getParameter("clientId"));
             Date dateCommande = Date.valueOf(request.getParameter("dateCommande"));
             Date dateLivraison = Date.valueOf(request.getParameter("dateLivraison"));
@@ -137,14 +140,14 @@ public class EnregistrerCommandeServletControleur extends HttpServlet {
             
             // Rediriger ou afficher un message en fonction du résultat
             if (isCommandeEnregistree) {
-                response.sendRedirect("/pages/commandeConfirmation.jsp"); // page de confirmation
+            	response.sendRedirect(request.getContextPath() + "/pages/commandeConfirmation.jsp"); // page de confirmation
             } else {
-                response.sendRedirect("/pages/erreurCommande.jsp"); // page d'erreur
+            	response.sendRedirect(request.getContextPath() + "/pages/erreurCommande.jsp"); // page d'erreur
             }
             
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("/pages/erreurCommande.jsp");
+            response.sendRedirect(request.getContextPath() + "/pages/erreurCommande.jsp");
         }
     }
 
