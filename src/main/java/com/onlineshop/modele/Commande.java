@@ -27,12 +27,11 @@ public class Commande {
     private String ccv;
 
     // Constructeur sans l'ID (l'ID est généré par la base de données)
-    public Commande(int clientId, Date dateCommande, Date dateLivraison, double total, String nom, String prenom,
+    public Commande(Date dateCommande, Date dateLivraison, double total, String nom, String prenom,
                     String telephone, String courriel, String adresse, String ville, String province,
                     String pays, String codePostal, String adresseLivraison, String villeLivraison,
                     String provinceLivraison, String paysLivraison, String codePostalLivraison,
                     String numeroCarteCredit, Date dateExpiration, String ccv) {
-        this.clientId = clientId;
         this.dateCommande = dateCommande;
         this.dateLivraison = dateLivraison;
         this.total = total;
@@ -62,14 +61,6 @@ public class Commande {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(int clientId) {
-        this.clientId = clientId;
     }
 
     public Date getDateCommande() {
@@ -235,8 +226,6 @@ public class Commande {
     @Override
     public String toString() {
         return "Commande{" +
-                "id=" + id +
-                ", clientId=" + clientId +
                 ", dateCommande=" + dateCommande +
                 ", dateLivraison=" + dateLivraison +
                 ", total=" + total +
