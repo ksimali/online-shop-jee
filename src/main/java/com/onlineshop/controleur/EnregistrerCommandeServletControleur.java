@@ -54,7 +54,11 @@ public class EnregistrerCommandeServletControleur extends HttpServlet {
 
         // Si l'utilisateur n'est pas connecté, rediriger vers la page de connexion
         if (clientId == null) {
-            response.sendRedirect(request.getContextPath() + "/pages/login.jsp"); // Page de connexion
+        	// Ajouter un message d'erreur à la requête
+            request.setAttribute("message", "Vous devez être connecté pour valider votre panier.");
+            
+            // Rediriger vers la page de login
+            request.getRequestDispatcher("/pages/login.jsp").forward(request, response);
             return;
         }
 
@@ -63,6 +67,7 @@ public class EnregistrerCommandeServletControleur extends HttpServlet {
         if (panier == null || panier.getProduits().isEmpty()) {
             // Si le panier est vide, ajouter un message d'information
             request.setAttribute("message", "Votre panier est vide. Vous ne pouvez pas passer de commande.");
+            
             // Rediriger vers la page panier pour que l'utilisateur puisse ajouter des produits
             request.getRequestDispatcher("/pages/panier.jsp").forward(request, response);
             return;
