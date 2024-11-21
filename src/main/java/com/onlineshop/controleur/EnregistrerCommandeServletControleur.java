@@ -2,6 +2,8 @@ package com.onlineshop.controleur;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.SQLException;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
@@ -12,8 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import com.onlineshop.modele.Categorie;
 import com.onlineshop.modele.Commande;
 import com.onlineshop.modele.Panier;
+import com.onlineshop.service.CategorieDbService;
 import com.onlineshop.service.CommandeService;
 
 /**
@@ -28,6 +32,7 @@ public class EnregistrerCommandeServletControleur extends HttpServlet {
 	private DataSource dataSource;
     
 	private CommandeService commandeService;
+	private CategorieDbService categorieDbService;
 
     @Override
     public void init() throws ServletException {
@@ -40,7 +45,7 @@ public class EnregistrerCommandeServletControleur extends HttpServlet {
      */
     public EnregistrerCommandeServletControleur() {
         super();
-        // TODO Auto-generated constructor stub
+        categorieDbService = new CategorieDbService();
     }
 
 	/**
@@ -48,14 +53,28 @@ public class EnregistrerCommandeServletControleur extends HttpServlet {
 	 */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Vérifier si l'utilisateur est connecté en utilisant la session
+    	// Récupérer les catégories via les services
+        List<Categorie> categories;
+		try {
+			categories = categorieDbService.getAllCategories();
+			
+			System.out.println("Catégories: " + categories);
+	        
+	        // Ajouter les produits et les catégories dans l'objet requête
+	        request.setAttribute("categories", categories);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	// Vérifier si l'utilisateur est connecté en utilisant la session
         HttpSession session = request.getSession();
-        Integer clientId = (Integer) session.getAttribute("clientId");
+        String userEmail = (String) session.getAttribute("userEmail");
 
         // Si l'utilisateur n'est pas connecté, rediriger vers la page de connexion
-        if (clientId == null) {
+        if (userEmail == null) {
         	// Ajouter un message d'erreur à la requête
-            request.setAttribute("message", "Vous devez être connecté pour valider votre panier.");
+            request.setAttribute("loginToValidate", "Vous devez être connecté pour valider votre panier.");
             
             // Rediriger vers la page de login
             request.getRequestDispatcher("/pages/login.jsp").forward(request, response);
@@ -66,7 +85,7 @@ public class EnregistrerCommandeServletControleur extends HttpServlet {
         Panier panier = (Panier) session.getAttribute("panier");
         if (panier == null || panier.getProduits().isEmpty()) {
             // Si le panier est vide, ajouter un message d'information
-            request.setAttribute("message", "Votre panier est vide. Vous ne pouvez pas passer de commande.");
+            request.setAttribute("panierVide", "Votre panier est vide. Vous ne pouvez pas passer de commande.");
             
             // Rediriger vers la page panier pour que l'utilisateur puisse ajouter des produits
             request.getRequestDispatcher("/pages/panier.jsp").forward(request, response);
@@ -85,7 +104,7 @@ public class EnregistrerCommandeServletControleur extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             // Récupérer les données du formulaire
-            int clientId = Integer.parseInt(request.getParameter("clientId"));
+            //int clientId = Integer.parseInt(request.getParameter("clientId"));
             Date dateCommande = Date.valueOf(request.getParameter("dateCommande"));
             Date dateLivraison = Date.valueOf(request.getParameter("dateLivraison"));
             double total = Double.parseDouble(request.getParameter("total"));
@@ -107,7 +126,7 @@ public class EnregistrerCommandeServletControleur extends HttpServlet {
             Date dateExpiration = Date.valueOf(request.getParameter("dateExpiration"));
             String ccv = request.getParameter("ccv");
             // Créer un objet Commande
-            Commande commande = new Commande(clientId, dateCommande, dateLivraison, total, nom, prenom, telephone, 
+            Commande commande = new Commande(dateCommande, dateLivraison, total, nom, prenom, telephone, 
                                               courriel, adresse, ville, province, pays, codePostal, 
                                               adresseLivraison, villeLivraison, provinceLivraison, 
                                               paysLivraison, codePostalLivraison, numeroCarteCredit, 
