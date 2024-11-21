@@ -6,6 +6,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,12 +37,23 @@ public class EnregistrerCommandeServletControleur extends HttpServlet {
 	private CommandeService commandeService;
 	private CategorieDbService categorieDbService;
 
-    @Override
-    public void init() throws ServletException {
-        // Initialisation de la DataSource (injection par le conteneur servlet)
-        DataSource dataSource = (DataSource) getServletContext().getAttribute("jdbc/onlineshop_bd");
-        commandeService = new CommandeService(dataSource);
-    }
+	@Override
+	public void init() throws ServletException {
+	    try {
+	        // Utilisation de JNDI pour récupérer la DataSource
+	        InitialContext context = new InitialContext();
+	        this.dataSource = (DataSource) context.lookup("java:/comp/env/jdbc/onlineshop_bd");
+
+	        if (this.dataSource == null) {
+	            throw new IllegalStateException("La DataSource n'a pas pu être initialisée.");
+	        }
+
+	        this.commandeService = new CommandeService(dataSource);
+	    } catch (NamingException e) {
+	        throw new ServletException("Erreur lors de l'initialisation de la DataSource", e);
+	    }
+	}
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -101,53 +115,97 @@ public class EnregistrerCommandeServletControleur extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	@Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-        	// Récupérer la date actuelle comme date de commande
-            Date dateCommande = new Date(System.currentTimeMillis());
-            
-            // Récupérer les autres données du formulaire
-            //int clientId = Integer.parseInt(request.getParameter("clientId"));
-            Date dateLivraison = Date.valueOf(request.getParameter("dateLivraison"));
-            double total = Double.parseDouble(request.getParameter("total"));
-            String nom = request.getParameter("nom");
-            String prenom = request.getParameter("prenom");
-            String telephone = request.getParameter("telephone");
-            String courriel = request.getParameter("courriel");
-            String adresse = request.getParameter("adresse");
-            String ville = request.getParameter("ville");
-            String province = request.getParameter("province");
-            String pays = request.getParameter("pays");
-            String codePostal = request.getParameter("codePostal");
-            String adresseLivraison = request.getParameter("adresseLivraison");
-            String villeLivraison = request.getParameter("villeLivraison");
-            String provinceLivraison = request.getParameter("provinceLivraison");
-            String paysLivraison = request.getParameter("paysLivraison");
-            String codePostalLivraison = request.getParameter("codePostalLivraison");
-            String numeroCarteCredit = request.getParameter("numeroCarteCredit");
-            Date dateExpiration = Date.valueOf(request.getParameter("dateExpiration"));
-            String ccv = request.getParameter("ccv");
-            // Créer un objet Commande
-            Commande commande = new Commande(dateCommande, dateLivraison, total, nom, prenom, telephone, 
-                                              courriel, adresse, ville, province, pays, codePostal, 
-                                              adresseLivraison, villeLivraison, provinceLivraison, 
-                                              paysLivraison, codePostalLivraison, numeroCarteCredit, 
-                                              dateExpiration, ccv);
-            
-            // Enregistrer la commande via le service
-            boolean isCommandeEnregistree = commandeService.enregistrerCommande(commande);
-            
-            // Rediriger ou afficher un message en fonction du résultat
-            if (isCommandeEnregistree) {
-            	response.sendRedirect(request.getContextPath() + "/pages/commandeConfirmation.jsp"); // page de confirmation
-            } else {
-            	response.sendRedirect(request.getContextPath() + "/pages/erreurCommande.jsp"); // page d'erreur
-            }
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.sendRedirect(request.getContextPath() + "/pages/erreurCommande.jsp");
-        }
-    }
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	    try {
+	        // Récupérer la date actuelle comme date de commande
+	        Date dateCommande = new Date(System.currentTimeMillis());
+
+	        // Récupérer et traiter la dateLivraison
+	        String dateLivraisonParam = request.getParameter("dateLivraison");
+	        Date dateLivraison = null;
+	        
+	        if (dateLivraisonParam != null && !dateLivraisonParam.isEmpty()) {
+	            try {
+	                dateLivraison = Date.valueOf(dateLivraisonParam);
+	            } catch (IllegalArgumentException e) {
+	                // Si la date est invalide, rediriger vers la page d'erreur
+	                response.sendRedirect(request.getContextPath() + "/pages/erreurCommande.jsp");
+	                return; // Sortir de la méthode pour ne pas continuer
+	            }
+	        } else {
+	            // Si la dateLivraison est vide, rediriger vers la page d'erreur
+	            response.sendRedirect(request.getContextPath() + "/pages/erreurCommande.jsp");
+	            return;
+	        }
+
+	        // Récupération des autres paramètres du formulaire
+	        String nom = request.getParameter("nom");
+	        String prenom = request.getParameter("prenom");
+	        String telephone = request.getParameter("telephone");
+	        String courriel = request.getParameter("courriel");
+	        String adresse = request.getParameter("adresse");
+	        String ville = request.getParameter("ville");
+	        String province = request.getParameter("province");
+	        String pays = request.getParameter("pays");
+	        String codePostal = request.getParameter("codePostal");
+	        String adresseLivraison = request.getParameter("adresseLivraison");
+	        String villeLivraison = request.getParameter("villeLivraison");
+	        String provinceLivraison = request.getParameter("provinceLivraison");
+	        String paysLivraison = request.getParameter("paysLivraison");
+	        String codePostalLivraison = request.getParameter("codePostalLivraison");
+	        String numeroCarteCredit = request.getParameter("numeroCarteCredit");
+	        String dateExpirationParam = request.getParameter("dateExpiration");
+	        
+	        // Traitement de la date d'expiration (au format MM/AA)
+	        Date dateExpiration = null;
+	        if (dateExpirationParam != null && !dateExpirationParam.isEmpty()) {
+	            try {
+	                String[] expirationParts = dateExpirationParam.split("/");
+	                String formattedExpirationDate = "20" + expirationParts[1] + "-" + expirationParts[0] + "-01"; // "20" pour le siècle
+	                dateExpiration = Date.valueOf(formattedExpirationDate);
+	            } catch (IllegalArgumentException e) {
+	                // Si la date d'expiration est invalide, rediriger vers la page d'erreur
+	                response.sendRedirect(request.getContextPath() + "/pages/erreurCommande.jsp");
+	                return; // Sortir de la méthode pour ne pas continuer
+	            }
+	        }
+
+	        String ccv = request.getParameter("ccv");
+
+	        // Créer un objet Commande
+	        Commande commande = new Commande(dateCommande, dateLivraison, nom, prenom, telephone, 
+	                                          courriel, adresse, ville, province, pays, codePostal, 
+	                                          adresseLivraison, villeLivraison, provinceLivraison, 
+	                                          paysLivraison, codePostalLivraison, numeroCarteCredit, 
+	                                          dateExpiration, ccv);
+	        
+	        // Enregistrer la commande via le service
+	        boolean isCommandeEnregistree = commandeService.enregistrerCommande(commande);
+	        
+	        // Rediriger ou afficher un message en fonction du résultat
+	        if (isCommandeEnregistree) {
+	        	// Vider le panier dans la session
+	            HttpSession session = request.getSession();
+	            session.removeAttribute("panier");
+	            
+	            // rediriger vers la page de confirmation
+	            // Ajouter les informations de la commande comme attributs de la requête
+	            request.setAttribute("commande", commande);
+
+	            // Rediriger vers la page de confirmation (en mode forward)
+	            RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/commandeConfirmation.jsp");
+	            dispatcher.forward(request, response);
+	        } else {
+	            response.sendRedirect(request.getContextPath() + "/pages/erreurCommande.jsp"); // page d'erreur
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        response.sendRedirect(request.getContextPath() + "/pages/erreurCommande.jsp");
+	    }
+	}
+
+	
+
 
 }
