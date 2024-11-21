@@ -20,6 +20,12 @@
             <%@ include file="../aside.jsp" %>
 
             <div class="col-md-9">
+            	<c:if test="${not empty loginToValidate}">
+                    <div class="alert alert-primary">${loginToValidate}</div>
+                </c:if>
+                <c:if test="${not empty panierVide}">
+                    <div class="alert alert-primary">${panierVide}</div>
+                </c:if>
                 
                 <form action="${pageContext.request.contextPath}/auth" method="POST" style="margin-left: 100px;">
                 	<h3 class="text-dark">Connexion</h3><br/>
