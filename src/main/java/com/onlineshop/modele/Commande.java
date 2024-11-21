@@ -4,10 +4,8 @@ import java.sql.Date;
 
 public class Commande {
     private int id;
-    private int clientId;
-    private Date dateCommande;         // Utilisation de java.sql.Date pour DateTime en base
-    private Date dateLivraison;        // Utilisation de java.sql.Date pour DateTime en base
-    private double total;
+    private Date dateCommande;          
+    private Date dateLivraison;        
     private String nom;
     private String prenom;
     private String telephone;
@@ -27,14 +25,13 @@ public class Commande {
     private String ccv;
 
     // Constructeur sans l'ID (l'ID est généré par la base de données)
-    public Commande(Date dateCommande, Date dateLivraison, double total, String nom, String prenom,
+    public Commande(Date dateCommande, Date dateLivraison, String nom, String prenom,
                     String telephone, String courriel, String adresse, String ville, String province,
                     String pays, String codePostal, String adresseLivraison, String villeLivraison,
                     String provinceLivraison, String paysLivraison, String codePostalLivraison,
                     String numeroCarteCredit, Date dateExpiration, String ccv) {
         this.dateCommande = dateCommande;
         this.dateLivraison = dateLivraison;
-        this.total = total;
         this.nom = nom;
         this.prenom = prenom;
         this.telephone = telephone;
@@ -77,14 +74,6 @@ public class Commande {
 
     public void setDateLivraison(Date dateLivraison) {
         this.dateLivraison = dateLivraison;
-    }
-
-    public double getTotal() {
-        return total;
-    }
-
-    public void setTotal(double total) {
-        this.total = total;
     }
 
     public String getNom() {
@@ -228,7 +217,6 @@ public class Commande {
         return "Commande{" +
                 ", dateCommande=" + dateCommande +
                 ", dateLivraison=" + dateLivraison +
-                ", total=" + total +
                 ", nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
                 ", telephone='" + telephone + '\'' +
